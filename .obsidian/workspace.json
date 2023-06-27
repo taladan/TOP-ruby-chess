@@ -149,16 +149,18 @@
   },
   "active": "8c8a3378d7f319d4",
   "lastOpenFiles": [
-    "ruby-chess.gemspec",
-    "lib/chess.rb",
-    "lib/chess/square.rb",
-    "lib/chess/square_handler.rb",
-    "lib/chess/rook.rb",
-    "lib/chess/queen.rb",
-    "lib/chess/piece_handler.rb",
-    "lib/chess/pawn.rb",
-    "lib/chess/knight.rb",
-    "lib/chess/king.rb",
-    "lib/chess/display.rb"
+    "bin/setup",
+    "bin/console",
+    "Rakefile",
+    "TOP-ruby-chess.gemspec",
+    "sig/TOP/ruby/chess.rbs",
+    "sig/TOP/ruby",
+    "sig/TOP",
+    "sig",
+    "lib/TOP/ruby/chess/version.rb",
+    "lib/TOP/ruby/chess.rb",
+    "lib/TOP/ruby/chess",
+    "ruby-chess/README.md",
+    "ruby-chess/CHANGELOG.md"
   ]
 }
