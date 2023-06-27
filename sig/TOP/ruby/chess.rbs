@@ -1,8 +1,4 @@
-module TOP
-  module Ruby
-    module Chess
-      VERSION: String
-      # See the writing guide of rbs: https://github.com/ruby/rbs#guides
-    end
-  end
+module Chess
+  VERSION: String
+  # See the writing guide of rbs: https://github.com/ruby/rbs#guides
 end
