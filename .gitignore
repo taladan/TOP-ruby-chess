@@ -6,6 +6,7 @@
 /pkg/
 /spec/reports/
 /tmp/
+/.obsidian/
 
 # rspec failure tracking
 .rspec_status

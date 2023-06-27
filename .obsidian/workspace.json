@@ -149,6 +149,11 @@
   },
   "active": "8c8a3378d7f319d4",
   "lastOpenFiles": [
+    "lib/chess/version.rb",
+    "CHANGELOG.md",
+    "spec/TOP/ruby/chess_spec.rb",
+    "spec/TOP/ruby",
+    "spec/TOP",
     "bin/setup",
     "bin/console",
     "Rakefile",
@@ -156,10 +161,6 @@
     "sig/TOP/ruby/chess.rbs",
     "sig/TOP/ruby",
     "sig/TOP",
-    "sig",
-    "lib/TOP/ruby/chess/version.rb",
-    "lib/TOP/ruby/chess.rb",
-    "lib/TOP/ruby/chess",
     "ruby-chess/README.md",
     "ruby-chess/CHANGELOG.md"
   ]
