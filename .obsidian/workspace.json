@@ -1,0 +1,164 @@
+{
+  "main": {
+    "id": "d206b024957e6f4a",
+    "type": "split",
+    "children": [
+      {
+        "id": "8cba445f4b43a3c5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8c8a3378d7f319d4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4c9c74b349aed9d8",
+    "type": "split",
+    "children": [
+      {
+        "id": "48350c70f39bd753",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a4ebb11675442bbf",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "096bf9fc913cfb09",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "295e929d34a62ce3",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "right": {
+    "id": "a210e171eca2e66c",
+    "type": "split",
+    "children": [
+      {
+        "id": "bc25aaf91dafb2b7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "fae18b4173e9ad46",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "README.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "9b3835f3af3eb4fc",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "README.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "51ff3c8c06ac8f15",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "20c9c417c083d89f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "README.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "8c8a3378d7f319d4",
+  "lastOpenFiles": [
+    "ruby-chess.gemspec",
+    "lib/chess.rb",
+    "lib/chess/square.rb",
+    "lib/chess/square_handler.rb",
+    "lib/chess/rook.rb",
+    "lib/chess/queen.rb",
+    "lib/chess/piece_handler.rb",
+    "lib/chess/pawn.rb",
+    "lib/chess/knight.rb",
+    "lib/chess/king.rb",
+    "lib/chess/display.rb"
+  ]
+}
