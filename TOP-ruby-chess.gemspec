@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require_relative "lib/TOP/ruby/chess/version"
+require_relative "lib/chess/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "TOP-ruby-chess"
-  spec.version = TOP::Ruby::Chess::VERSION
+  spec.name = "ruby-chess"
+  spec.version = Chess::VERSION
   spec.authors = ["D.J. Crosby"]
   spec.email = ["taladan@gmail.com"]
 
   spec.summary = "Standard chess game."
   spec.description = "TODO: Write a longer description or delete this line."
-  spec.homepage = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage = "https://github.com/taladan/TOP-ruby-chess"
   spec.required_ruby_version = ">= 2.6.0"
 
   spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
