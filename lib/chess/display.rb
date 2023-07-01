@@ -19,7 +19,7 @@ module Display
 
   # Display handled by @display
   def update_display
-    # @rows - 1..0 because we"re searching by position
+    # @rows - 1..0 because we're searching by position
     # Build by row
     (@rows - 1).downto(0) { |row| puts build_row_string(build_row(row)) }
     linebreak
