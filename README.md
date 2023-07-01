@@ -12,7 +12,7 @@ The moves of chess are outlined in algebraic notation where:
 
 `1. e4 e5`
 
-Encompases all of turn one.  e4 represents the white piece's move and e5 represents the black piece's move.  In this case, `e` represents the 'file' where the movement starts.  Because there is no letter designator (K, Q, R, N, B), it indicates that a pawn is being moved, and `4` represents the rank where the piece is ending it's move.  So, the white pawn in file 'e' moves forward to rank '4'.  Then the black pawn in file 'e' moves forward to rank '5'.
+Encompasses all of turn one.  'e4' represents the white piece's move and 'e5' represents the black piece's move.  In this case, `e` represents the 'file' where the movement starts.  Because there is no letter designator (K, Q, R, N, B), it indicates that a pawn is being moved, and `4` represents the rank where the piece is ending it's move.  So, the white pawn in file 'e' moves forward to rank '4'.  Then the black pawn in file 'e' moves forward to rank '5'.
 
 When referencing a piece, the abbreviation for that piece is always capitalized:
     - K - king
