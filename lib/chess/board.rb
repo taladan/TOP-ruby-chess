@@ -1,11 +1,11 @@
 # board.rb
-require_relative 'square'
-require_relative 'display'
-require_relative 'piece_handler'
-require_relative 'square_handler'
-require_relative 'chess_piece'
+require_relative "square"
+require_relative "display"
+require_relative "piece_handler"
+require_relative "square_handler"
+require_relative "chess_piece"
 
-# Generate a graph called 'Board' of nodes called 'squares'
+# Generate a graph called "Board" of nodes called "squares"
 class Board
   include Pieces
   include Squares
@@ -49,7 +49,7 @@ class Board
 
   # return array of lettered columns from a - zz
   def column_labels
-    alphas = ('a'..'zz').to_a
+    alphas = ("a".."zz").to_a
     array = []
     @columns.times do |column|
       array << alphas[column]
