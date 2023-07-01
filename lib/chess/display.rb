@@ -52,9 +52,11 @@ module Display
   end
 
   def print_column_labels
+    linebreak
     printf("     ")
     column_labels.each do |label|
       printf("%-6s", label)
     end
+    linebreak
   end
 end
