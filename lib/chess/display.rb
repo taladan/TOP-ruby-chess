@@ -17,14 +17,26 @@ module Display
     [output[:top], output[:middle], output[:bottom]].join("\n")
   end
 
-  # Display handled by @display
-  def update_display
-    # @rows - 1..0 because we're searching by position
+  # Output chess board to terminal
+  #
+  # Syntax: #update_display[(true)]
+  #
+  # If update_display is called without passing 'true', it displays the board
+  # from the perspective of the white pieces being at the bottom of the board.
+  #
+  # If update_display is called with 'true', it displays the board from the
+  # perspective of the black pieces being at the bottom of the board.
+
+  def update_display(reverse: false)
     # Build by row
-    (@rows - 1).downto(0) { |row| puts build_row_string(build_row(row)) }
-    linebreak
+    if reverse
+      # 0 - @rows - 1, black on bottom
+      (0..@rows - 1).each { |row| puts build_row_string(build_row(row)) }
+    else
+      # @rows - 1..0, white on bottom
+      (@rows - 1).downto(0) { |row| puts build_row_string(build_row(row)) }
+    end
     print_column_labels
-    linebreak
   end
 
   private
