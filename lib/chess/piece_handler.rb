@@ -3,10 +3,11 @@
 
 # Handle piece logic
 module Pieces
-  @@valid_piece_names = %w[WK BK WQ BQ WB BB WN BN WR BR WP BP]
-  # add piece to board.  Piece must be in two letter format: 'WK', 'BQ', 'WP', 'BB', etc
-  # The first letter indicates the color of the piece, the last two letters indicate the piece
-  # Also take a named position to add piece to ('a1-h8')
+  # Using [FEN](https://www.chess.com/terms/fen-chess) standard for piece 'naming' to use a single letter indication for piece names
+  #
+  # Uppercase - White pieces
+  # Lowercase - Black pieces
+  @@valid_piece_names = %w[K Q B N R P k q b n r p]
 
   def add_piece(piece, position)
     raise ArgumentError, 'Invalid Position' unless @valid_squares.include?(position.downcase)
