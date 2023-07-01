@@ -23,10 +23,7 @@ module Display
     # Build by row
     (@rows - 1).downto(0) { |row| puts build_row_string(build_row(row)) }
     linebreak
-    printf("     ")
-    column_labels.each do |label|
-      printf("%-6s", label)
-    end
+    print_column_labels
     linebreak
   end
 
@@ -51,6 +48,13 @@ module Display
       string.on_black
     else
       string.on_white
+    end
+  end
+
+  def print_column_labels
+    printf("     ")
+    column_labels.each do |label|
+      printf("%-6s", label)
     end
   end
 end
