@@ -35,9 +35,8 @@ class Board
   private
 
   # is the queried square a boundary square?
+  # This method is currently unreferenced but may be useful in the future
   def boundary?(square)
-    # Square occupied
-    return true if square.occupied?
     # Square is out of bounds
     if square.position[0].zero? || square.position[1].zero? || square.position[0] == 7 || square.position[1] == 7
       return true
@@ -45,6 +44,11 @@ class Board
 
     # Square is empty, proceed
     false
+  end
+  
+  # Return true if the square is occupied
+  def occupied?(square)
+    return true if square.occupied?
   end
 
   # return array of lettered columns from a - zz
