@@ -20,7 +20,7 @@ class ChessPiece
     @color = color
     @name = name
     @current_square = current_square
-    @possible_moves = get_possible_moves
+    @possible_moves = piece_moves
     colorize_name
   end
 
@@ -33,7 +33,7 @@ class ChessPiece
   end
 
   # Apply correct possible moves
-  def get_possible_moves
+  def piece_moves
     case @name
     when "K"
       @possible_moves = King::POSSIBLE_MOVES
