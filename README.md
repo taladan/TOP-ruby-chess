@@ -57,11 +57,11 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 #### List:
 - [ ] Decouple board from pieces and displays
 - [ ] Separate data from code:
-	- [ ] Create lib/data directory
+	- [x] Create lib/data directory
 	- [ ] Create standard_initial_setup file that stores the starting piece positions for a standard game of chess
 		- [ ] [Make the file READONLY](https://stackoverflow.com/questions/27553551/how-can-i-mark-a-committed-file-as-read-only-in-git)
 - [ ] piece_handler.rb:  
-	- [ ] need to alter the piece names to use [fen](https://www.chess.com/terms/fen-chess) standard
+	- [x] need to alter the piece names to use [fen](https://www.chess.com/terms/fen-chess) standard
 	- [ ] \#add_piece method seems tightly coupled to square.rb - square_handler should probably be called here to swap square's contents
 	- [ ] \#move_piece should be refactored to call a custom error (InvalidTarget or something similar)
 	- [ ] decouple \#put_piece from square.rb
@@ -71,17 +71,22 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 ### Features
 
 #### Needed
+- [ ] Implement class objects for pieces
+- [ ] Define piece movements (POSSIBLE_MOVES)
 - [ ] executable that runs chess
-- [ ] Driver module that requires:
-	- [ ] board.rb - controls board object code
-		- [ ] requires square_handler.rb
-			- [ ] requires square.rb
-	- [ ] piece_handler.rb - controls movement, placement, creation and identification of pieces
-		- [ ] requires pieces/pieces.rb - collection of usable pieces
-			- [ ] requires chess_piece.rb, king.rb, queen.rb, rook.rb, bishop.rb, knight.rb, pawn.rb
-	- [ ] display.rb
-	- [ ] version.rb
-- [ ] An initial setup of the board state for a standard game of chess. 
+- [ ] Driver module 
+	- [ ] requires:
+		- [ ] board.rb - controls board object code
+			- [ ] requires square_handler.rb
+				- [ ] requires square.rb
+		- [ ] piece_handler.rb - controls movement, placement, creation and identification of pieces
+			- [ ] requires pieces/pieces.rb - collection of usable pieces
+				- [ ] requires chess_piece.rb, king.rb, queen.rb, rook.rb, bishop.rb, knight.rb, pawn.rb
+		- [ ] display.rb
+		- [ ] version.rb
+	  - [ ] features:
+		  - [ ] query user for type of game, standard/custom builtin
+- [x] An initial setup of the board state for a standard game of chess. 
 	- [ ] piece positions:
 		- [ ] a8 - black queen's rook
 		- [ ] b8 - black queen's knight
@@ -115,3 +120,4 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 - [x] Board display reversability for 2 player play so 'current player' is always at the bottom of the board facing their opponent 
 - [ ] Tab completion for moves 
 - [ ] Game timer
+- [ ] Global options configuration - `--board-setup filename.yml` - checks for `./lib/data/filename.yml` or current directory for filename.yml and loads the board setup from there.
