@@ -1,13 +1,13 @@
 # board.rb
-require_relative "square"
-require_relative "display"
-require_relative "piece_handler"
-require_relative "square_handler"
-require_relative "chess_piece"
+require "square"
+require "display"
+require "piece_handler"
+require "square_handler"
+require "chess_piece"
 
 # Generate a graph called "Board" of nodes called "squares"
 class Board
-  include Pieces
+  include PieceHandler
   include Squares
   include Display
   attr_accessor :squares
