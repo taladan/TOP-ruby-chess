@@ -1,5 +1,7 @@
 # chess_piece.rb
+# frozen_string_literal: true
 
+# rubocop:disable Metrics/MethodLength
 
 # Parent class for all chess pieces
 class ChessPiece
@@ -48,3 +50,4 @@ class ChessPiece
     end
   end
 end
+# rubocop:enable Metrics/MethodLength
