@@ -3,9 +3,14 @@ require "colorize"
 
 # Handle building display for chessboard
 module Display
-  # this receives an array of square objects, and returns a string for display
+  # Create a displayable string of a row of squares.
+  #
+  # Syntax: #build_row_string(row)
+  #
+  # This receives an array of square objects, and returns a string for display
   # every square is treated as having a top, middle, and bottom pixel.  Contents of
   # each square will be displayed only in the middle pixel of the square.
+
   def build_row_string(row)
     output = { top: "", middle: "", bottom: "" }
     row.each do |square|
