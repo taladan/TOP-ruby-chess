@@ -18,7 +18,7 @@ class ChessPiece
   attr_reader :name, :color, :possible_moves
 
   def initialize(name, color, current_square)
-    raise ArgumentError, 'Invalid Name' unless %w[K Q B N R P].include?(name)
+    raise ArgumentError, "Invalid Name" unless %w[K Q B N R P].include?(name)
 
     @color = color
     @name = name
@@ -31,24 +31,24 @@ class ChessPiece
 
   # Apply color to piece
   def colorize_name
-    @name = @name.red if @color == 'white'
-    @name = @name.blue if @color == 'black'
+    @name = @name.red if @color == "white"
+    @name = @name.blue if @color == "black"
   end
 
   # Apply correct possible moves
   def get_possible_moves
     case @name
-    when 'K'
+    when "K"
       @possible_moves = King::POSSIBLE_MOVES
-    when 'Q'
+    when "Q"
       @possible_moves = Queen::POSSIBLE_MOVES
-    when 'B'
+    when "B"
       @possible_moves = Bishop::POSSIBLE_MOVES
-    when 'N'
+    when "N"
       @possible_moves = Knight::POSSIBLE_MOVES
-    when 'R'
+    when "R"
       @possible_moves = Rook::POSSIBLE_MOVES
-    when 'P'
+    when "P"
       @possible_moves = Pawn::POSSIBLE_MOVES
     end
   end
