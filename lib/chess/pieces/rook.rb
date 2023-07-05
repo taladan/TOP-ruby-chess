@@ -1,4 +1,6 @@
 # rook.rb
+# frozen_string_literal: true
+
 require_relative 'chess_piece'
 
 # Rook chess piece

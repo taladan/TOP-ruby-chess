@@ -1,4 +1,6 @@
 # knight.rb
+# frozen_string_literal: true
+
 
 # Knight chess piece
 module Knight

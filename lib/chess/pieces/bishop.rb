@@ -1,4 +1,6 @@
 # bishop.rb
+# frozen_string_literal: true
+
 
 # Bishop chess piece
 module Bishop

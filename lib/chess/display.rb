@@ -1,4 +1,6 @@
 # display.rb
+# frozen_string_literal: true
+
 require "colorize"
 
 # Handle building display for chessboard

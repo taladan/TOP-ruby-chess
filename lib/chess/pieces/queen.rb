@@ -1,4 +1,6 @@
 # queen.rb
+# frozen_string_literal: true
+
 
 # Queen Chess Piece
 class Queen < ChessPiece

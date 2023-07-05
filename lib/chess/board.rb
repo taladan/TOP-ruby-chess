@@ -1,4 +1,6 @@
 # board.rb
+# frozen_string_literal: true
+
 require "square"
 require "display"
 require "piece_handler"

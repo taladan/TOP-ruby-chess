@@ -1,4 +1,6 @@
 # square_handler.rb
+# frozen_string_literal: true
+
 # Square Logic module
 
 module Squares

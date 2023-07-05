@@ -1,4 +1,6 @@
 # piece_handling.rb
+# frozen_string_literal: true
+
 # Module file containing piece logic
 require "king"
 require "queen"

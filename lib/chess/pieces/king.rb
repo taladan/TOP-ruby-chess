@@ -1,4 +1,6 @@
 # king.rb
+# frozen_string_literal: true
+
 
 # King chess piece
 module King
