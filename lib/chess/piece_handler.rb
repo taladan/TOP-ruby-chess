@@ -1,33 +1,37 @@
 # piece_handling.rb
 # Module file containing piece logic
-require "king"
-require "queen"
-require "bishop"
-require "knight"
-require "rook"
-require "pawn"
+require 'king'
+require 'queen'
+require 'bishop'
+require 'knight'
+require 'rook'
+require 'pawn'
 
 # Handle piece logic
-module Pieces
+module PieceHandler
   # Using [FEN](https://www.chess.com/terms/fen-chess) standard for piece 'naming' to use a single letter indication for piece names
   #
   # Uppercase - White pieces
   # Lowercase - Black pieces
   @@valid_piece_names = %w[K Q B N R P k q b n r p]
 
+  # Syntax: #add_piece(piece, position)
+  #
+  # Piece must be in @@valid_piece_names format
+  # Position on board must exist and be empty
   def add_piece(piece, position)
-    raise ArgumentError, 'Invalid Position' unless @valid_squares.include?(position.downcase)
+    raise ArgumentError, "Invalid Position" unless @valid_squares.include?(position.downcase)
 
-    unless @@valid_piece_names.include?(piece.upcase)
+    unless @@valid_piece_names.include?(piece)
       raise ArgumentError,
             "Invalid Piece name: Must be one of: #{@valid_piece_names}"
     end
-    color = 'white' if piece[0].upcase == 'W'
-    color = 'black' if piece[0].upcase == 'B'
-    name = piece[1].upcase
+    color = "white" if /[[:upper:]]/.match(piece)
+    color = "black" if /[[:lower:]]/.match(piece)
+    # name = piece[1].upcase
 
     square = find_square_by_name(position.downcase)
-    square.contents = ChessPiece.new(name, color, square)
+    square.contents = ChessPiece.new(piece, color, square)
     nil
   end
 
@@ -48,19 +52,16 @@ module Pieces
 
   # move a piece from a named square to a named square ('a1-h8')
   def move_piece(from_square, to_square, override: false)
-    raise ArgumentError, 'Invalid Starting Position' unless @valid_squares.include?(from_square)
-    raise ArgumentError, 'Invalid Ending Position' unless @valid_squares.include?(to_square)
+    raise ArgumentError, "Invalid Starting Position" unless @valid_squares.include?(from_square)
+    raise ArgumentError, "Invalid Target Position" unless @valid_squares.include?(to_square)
 
     # If override is false, we stick with the piece's movement patterns.
     # If override is true, we ignore piece's movement patterns and just
     # place piece where we desire.
     if override == false
       valid_moves = get_square_positions(calculate_possible_moves(from_square))
-      unless valid_moves.include?(find_square_by_name(to_square).position)
-
-        raise ArgumentError,
-              "Square #{to_square} is not a valid target"
-      end
+      target = find_square_by_name(to_square)
+      raise ArgumentError, "Square #{to_square} is not a valid target" unless valid_moves.include?(target.position)
 
       put_piece(from_square, to_square)
     else
