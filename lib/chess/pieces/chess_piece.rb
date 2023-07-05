@@ -1,10 +1,5 @@
 # chess_piece.rb
-require_relative 'king'
-require_relative 'queen'
-require_relative 'bishop'
-require_relative 'knight'
-require_relative 'rook'
-require_relative 'pawn'
+
 
 # Parent class for all chess pieces
 class ChessPiece
