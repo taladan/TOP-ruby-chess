@@ -1,6 +1,6 @@
 # square.rb
 require 'colorize'
-require_relative 'display'
+require 'display'
 
 # Creates a graph node named 'square'
 class Square

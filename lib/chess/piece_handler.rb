@@ -1,5 +1,11 @@
 # piece_handling.rb
 # Module file containing piece logic
+require 'king'
+require 'queen'
+require 'bishop'
+require 'knight'
+require 'rook'
+require 'pawn'
 
 # Handle piece logic
 module Pieces
