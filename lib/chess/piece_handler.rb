@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 # Module file containing piece logic
+require "chess_piece"
 require "king"
 require "queen"
 require "bishop"
@@ -11,6 +12,7 @@ require "pawn"
 
 # Handle piece logic
 module PieceHandler
+  include Pieces
   # Using [FEN](https://www.chess.com/terms/fen-chess) standard for piece 'naming' to use a single letter indication for piece names
   #
   # Uppercase - White pieces
@@ -26,11 +28,10 @@ module PieceHandler
 
     unless @@valid_piece_names.include?(piece)
       raise ArgumentError,
-            "Invalid Piece name: Must be one of: #{@valid_piece_names}"
+            "Invalid Piece name: #{piece}. Must be one of: #{@@valid_piece_names}"
     end
     color = "white" if /[[:upper:]]/.match(piece)
     color = "black" if /[[:lower:]]/.match(piece)
-    # name = piece[1].upcase
 
     square = find_square_by_name(position.downcase)
     square.contents = ChessPiece.new(piece, color, square)
@@ -64,11 +65,10 @@ module PieceHandler
       valid_moves = get_square_positions(calculate_possible_moves(from_square))
       target = find_square_by_name(to_square)
       raise ArgumentError, "Square #{to_square} is not a valid target" unless valid_moves.include?(target.position)
-
-      put_piece(from_square, to_square)
-    else
-      put_piece(from_square, to_square)
     end
+
+    put_piece(from_square, to_square)
+    nil
   end
 
   private
@@ -93,7 +93,7 @@ module PieceHandler
     # load piece
     piece = from.contents
 
-    raise ArgumentError, 'No piece detected in starting Square' if from.contents.nil?
+    raise ArgumentError, "No piece detected in starting Square" if from.contents.nil?
 
     # swap squares contents
     to.contents = from.contents
