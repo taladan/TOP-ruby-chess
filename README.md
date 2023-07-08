@@ -58,8 +58,7 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 - [ ] Decouple board from pieces and displays
 - [ ] Separate data from code:
 	- [x] Create lib/data directory
-	- [ ] Create standard_initial_setup file that stores the starting piece positions for a standard game of chess
-		- [ ] [Make the file READONLY](https://stackoverflow.com/questions/27553551/how-can-i-mark-a-committed-file-as-read-only-in-git)
+	- [x] Create standard_initial_setup file that stores the starting piece positions for a standard game of chess
 - [ ] piece_handler.rb:  
 	- [x] need to alter the piece names to use [fen](https://www.chess.com/terms/fen-chess) standard
 	- [ ] \#add_piece method seems tightly coupled to square.rb - square_handler should probably be called here to swap square's contents
