@@ -1,10 +1,11 @@
 # queen.rb
 # frozen_string_literal: true
 
+require "chess_piece"
 
 # Queen Chess Piece
-class Queen < ChessPiece
-  module Queen
+module Pieces
+  class Queen < ChessPiece
     POSSIBLE_MOVES = [
       [1, 1],
       [2, 2],

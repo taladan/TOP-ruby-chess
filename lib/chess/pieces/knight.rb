@@ -1,9 +1,10 @@
 # knight.rb
 # frozen_string_literal: true
 
+require "chess_piece"
 
 # Knight chess piece
-module Knight
+module Pieces
   class Knight < ChessPiece
     # Knight can move any combination of 2,1 squares
     POSSIBLE_MOVES = [

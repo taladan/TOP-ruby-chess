@@ -1,9 +1,10 @@
 # bishop.rb
 # frozen_string_literal: true
 
+require "chess_piece"
 
 # Bishop chess piece
-module Bishop
+module Pieces
   class Bishop < ChessPiece
     POSSIBLE_MOVES = [
       [1, 1],

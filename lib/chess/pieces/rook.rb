@@ -1,10 +1,10 @@
 # rook.rb
 # frozen_string_literal: true
 
-require_relative 'chess_piece'
+require "chess_piece"
 
 # Rook chess piece
-module Rook
+module Pieces
   class Rook < ChessPiece
     # Rook can move any number of squares in a straight line, left/right/up/down, no diagonals
     POSSIBLE_MOVES = [
