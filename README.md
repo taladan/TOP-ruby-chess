@@ -62,7 +62,7 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 - [ ] piece_handler.rb:  
 	- [x] need to alter the piece names to use [fen](https://www.chess.com/terms/fen-chess) standard
 	- [ ] \#add_piece method seems tightly coupled to square.rb - square_handler should probably be called here to swap square's contents
-	- [ ] \#move_piece should be refactored to call a custom error (InvalidTarget or something similar)
+	- [x] Implement custom errors
 	- [ ] decouple \#put_piece from square.rb
 
 ---
