@@ -70,8 +70,14 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 ### Features
 
 #### Needed
-- [ ] Implement class objects for pieces
+- [x] Implement class objects for pieces
 - [ ] Define piece movements (POSSIBLE_MOVES)
+	- [x] king
+	- [x] queen
+	- [x] bishop
+	- [x] knight
+	- [x] rook
+	- [ ] pawn
 - [ ] executable that runs chess
 - [ ] Driver module 
 	- [ ] requires:
@@ -120,3 +126,4 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 - [ ] Tab completion for moves 
 - [ ] Game timer
 - [ ] Global options configuration - `--board-setup filename.yml` - checks for `./lib/data/filename.yml` or current directory for filename.yml and loads the board setup from there.
+- [ ] [ASCII Chess pieces](https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode)
