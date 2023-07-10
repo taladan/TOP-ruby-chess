@@ -52,7 +52,7 @@ module Squares
   # This is a little raw.  If I were to refactor this, I'd set up a setter/getter function for neighbors in square.
   # This sets an unweighted, undirected edge between square and its `key` neighbor
   def add_edge(square, neighbor, key)
-    opposites = { n: 's', ne: 'sw', e: 'w', se: 'nw', s: 'n', sw: 'ne', w: 'e', nw: 'se' }
+    opposites = { n: "s", ne: "sw", e: "w", se: "nw", s: "n", sw: "ne", w: "e", nw: "se" }
     square.neighbors[key] = neighbor.name
     neighbor.neighbors[opposites[key].to_sym] = square.name
     nil
