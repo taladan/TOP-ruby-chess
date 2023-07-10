@@ -79,18 +79,18 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 	- [x] rook
 	- [ ] pawn
 - [ ] executable that runs chess
-- [ ] Driver module 
+- [ ] Driver module: `./main.rb`
 	- [ ] requires:
-		- [ ] board.rb - controls board object code
+		- [x] board - `./lib/chess/board.rb' controls board object code
 			- [ ] requires square_handler.rb
 				- [ ] requires square.rb
-		- [ ] piece_handler.rb - controls movement, placement, creation and identification of pieces
-			- [ ] requires pieces/pieces.rb - collection of usable pieces
+		- [x] piece_handler  `./lib/chess/piece_handler.rb` controls movement, placement, creation and identification of pieces
+			- [ ] requires chess_pieces(`Pieces`)- `./lib/chess/chess_piece.rb` collection of usable pieces
 				- [ ] requires chess_piece.rb, king.rb, queen.rb, rook.rb, bishop.rb, knight.rb, pawn.rb
-		- [ ] display.rb
-		- [ ] version.rb
-	  - [ ] features:
-		  - [ ] query user for type of game, standard/custom builtin
+		- [x] display.rb
+		- [x] version.rb
+  - [ ] features:
+	  - [ ] query user for type of game, standard/custom builtin
 - [x] An initial setup of the board state for a standard game of chess. 
 	- [ ] piece positions:
 		- [ ] a8 - black queen's rook
