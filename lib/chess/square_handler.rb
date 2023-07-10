@@ -1,8 +1,8 @@
 # square_handler.rb
 # frozen_string_literal: true
 
-# Square Logic module
-
+# This module contains the logic needed to deal with identification and 
+# manipulation of nodes (called squares) of a chess board.
 module Squares
   # return total number of squares in board
   def count
