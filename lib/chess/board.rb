@@ -2,16 +2,11 @@
 # frozen_string_literal: true
 
 require "square"
-require "display"
-require "piece_handler"
 require "square_handler"
-require "chess_piece"
 
 # Generate a graph called "Board" of nodes called "squares"
 class Board
-  include PieceHandler
   include Squares
-  include Display
   attr_accessor :squares
   attr_reader :columns, :rows, :display
 
@@ -47,7 +42,7 @@ class Board
     # Square is empty, proceed
     false
   end
-  
+
   # Return true if the square is occupied
   def occupied?(square)
     return true if square.occupied?

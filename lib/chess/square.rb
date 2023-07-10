@@ -1,8 +1,7 @@
 # square.rb
 # frozen_string_literal: true
 
-require 'colorize'
-require 'display'
+require "colorize"
 
 # Creates a graph node named 'square'
 class Square
@@ -31,9 +30,9 @@ class Square
   # Assign square color based on position within board.  Upper left & Lower right squares == whitejj
   def assign_color
     if (@position[0].even? && @position[1].even?) || (@position[0].odd? && @position[1].odd?)
-      @color = 'black'
+      @color = "black"
     elsif (@position[0].even? && @position[1].odd?) || (@position[0].odd? && @position[1].even?)
-      @color = 'white'
+      @color = "white"
     end
   end
 
@@ -49,15 +48,15 @@ class Square
 
   # Build square display
   def pixels
-    pad = '      '.on_black if @color == 'black'
-    pad = '      '.on_white if @color == 'white'
-    mid = "  #{@contents.name}   ".on_black if @color == 'black' && !@contents.nil?
-    mid = "  #{@contents.name}   ".on_white if @color == 'white' && !@contents.nil?
+    pad = "      ".on_black if @color == "black"
+    pad = "      ".on_white if @color == "white"
+    mid = "  #{@contents.name}   ".on_black if @color == "black" && !@contents.nil?
+    mid = "  #{@contents.name}   ".on_white if @color == "white" && !@contents.nil?
     # uncomment for square names in center of each square
-    # mid = "  #{name}  ".on_black if @color == 'black' && @contents.nil?
-    # mid = "  #{name}  ".on_white if @color == 'white' && @contents.nil?
-    mid = pad.on_black if @color == 'black' && @contents.nil?
-    mid = pad.on_white if @color == 'white' && @contents.nil?
+    # mid = "  #{name}  ".on_black if @color == "black" && @contents.nil?
+    # mid = "  #{name}  ".on_white if @color == "white" && @contents.nil?
+    mid = pad.on_black if @color == "black" && @contents.nil?
+    mid = pad.on_white if @color == "white" && @contents.nil?
 
     { top: pad, middle: mid, bottom: pad }
   end
