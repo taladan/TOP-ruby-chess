@@ -97,7 +97,7 @@ class Board
   def make_rows
     array = []
     @rows.times do |row|
-      array << row + 1
+      array << (row + 1)
     end
     array
   end
