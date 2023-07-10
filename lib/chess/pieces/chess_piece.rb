@@ -5,12 +5,30 @@
 
 # Parent class for all chess pieces
 module Pieces
+  # ChessPiece object
+  # When creating a new chess piece, it must follow FEN chess notation:
+  #
+  # K = White King
+  # Q = White Queen
+  # B = White Bishop
+  # N = White Knight
+  # R = White Rook
+  # P = White Pawn
+  # k = Black King
+  # q = Black Queen
+  # b = Black Bishop
+  # n = Black Knight
+  # r = Black Rook
+  # p = Black Pawn
+  #
+  # If an invalid piece name is passed when instantiating a chess piece, it will
+  # throw an `InvalidPieceNameError`.
   class ChessPiece
     attr_accessor :current_square
     attr_reader :name, :color, :possible_moves
 
     def initialize(name, color, current_square)
-      raise ArgumentError, "Invalid Name" unless %w[K Q B N R P k q b n r p].include?(name)
+      raise InvalidPieceNameError unless %w[K Q B N R P k q b n r p].include?(name)
 
       @color = color
       @name = name.upcase
