@@ -4,12 +4,14 @@
 # This module contains the logic needed to deal with identification and 
 # manipulation of nodes (called squares) of a chess board.
 module Squares
-  # return total number of squares in board
+  # count total number of squares in board
+  # takes nothing, returns integer
   def count
     squares.length
   end
 
-  # return square by name format columnrow - `a1`
+  # takes a string (ex: `a1`)
+  # returns `Square` object
   def find_square_by_name(name)
     @squares.each do |square|
       return square if square.name == name
@@ -17,14 +19,16 @@ module Squares
     nil
   end
 
-  # return square object by positional space -  takes an array
+  # takes an array (ex: [a1])
+  # returns 'Square' object
   def find_square_by_position(position)
     @squares.each do |square|
       return square if square.position == position
     end
   end
 
-  # returns the name of the square in position [col, row]
+  # Takes an array of two values: `[col, row]`
+  # returns string
   def get_name_by_position(position)
     return nil if position.nil?
 
@@ -32,6 +36,10 @@ module Squares
     square.name
   end
 
+  # Get a square's position from its name
+  #
+  # requires a non-nil value to be passed
+  # returns string
   def get_position_by_name(name)
     return nil if name.nil?
 
