@@ -1,4 +1,4 @@
-# piece_handling.rb
+# piece_handler.rb
 # frozen_string_literal: true
 
 # Module file containing piece logic
