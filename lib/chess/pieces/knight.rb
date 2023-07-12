@@ -6,7 +6,8 @@ require "chess_piece"
 # Knight chess piece
 module Pieces
   class Knight < ChessPiece
-    # Knight can move any combination of 2,1 squares
+    attr_reader :icon
+
     POSSIBLE_MOVES = [
       [1, 2],
       [-1, 2],
@@ -17,5 +18,11 @@ module Pieces
       [2, -1],
       [-2, -1]
     ]
+
+    def initialize
+      @icon = "♞"
+      super
+      # Knight can move any combination of 2,1 squares
+    end
   end
 end

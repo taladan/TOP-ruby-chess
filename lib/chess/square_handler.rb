@@ -3,7 +3,7 @@
 
 # This module contains the logic needed to deal with identification and
 # manipulation of nodes (called squares) of a chess board.
-module Squares
+module SquareHandler
   # count total number of squares in board
   # takes nothing, returns integer
   def count

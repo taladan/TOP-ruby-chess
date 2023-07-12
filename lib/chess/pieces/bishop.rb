@@ -6,6 +6,8 @@ require "chess_piece"
 # Bishop chess piece
 module Pieces
   class Bishop < ChessPiece
+    attr_reader :icon
+
     POSSIBLE_MOVES = [
       [1, 1],
       [2, 2],
@@ -40,5 +42,10 @@ module Pieces
       [-7, -7],
       [-8, -8]
     ]
+
+    def initialize
+      @icon = "♝"
+      super
+    end
   end
 end

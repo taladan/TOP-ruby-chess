@@ -25,7 +25,7 @@ module Pieces
   # throw an `InvalidPieceNameError`.
   class ChessPiece
     attr_accessor :current_square
-    attr_reader :name, :color, :possible_moves
+    attr_reader :name, :color, :possible_moves, :icon
 
     def initialize(name, color, current_square)
       raise InvalidPieceNameError unless %w[K Q B N R P k q b n r p].include?(name)
@@ -34,15 +34,15 @@ module Pieces
       @name = name.upcase
       @current_square = current_square
       @possible_moves = piece_moves
-      colorize_name
+      colorize_icon
     end
 
     private
 
     # Apply color to piece
-    def colorize_name
-      @name = @name.red if @color == "white"
-      @name = @name.blue if @color == "black"
+    def colorize_icon
+      @icon = @icon.red if @color == "white"
+      @icon = @icon.blue if @color == "black"
     end
 
     # Apply correct possible moves

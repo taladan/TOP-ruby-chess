@@ -1,12 +1,13 @@
 # board.rb
 # frozen_string_literal: true
 
-require "square"
-require "square_handler"
-
 # Generate a graph called "Board" of nodes called "squares"
 class Board
-  include Squares
+  # include Squares
+  include Display
+  include PieceHandler
+  include SquareHandler
+
   attr_accessor :squares
   attr_reader :columns, :rows, :display
 
