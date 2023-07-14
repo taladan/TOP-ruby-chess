@@ -8,6 +8,7 @@ module Pieces
   class Knight < ChessPiece
     attr_reader :icon
 
+    # Knight can move any combination of 2,1 squares
     POSSIBLE_MOVES = [
       [1, 2],
       [-1, 2],
@@ -19,10 +20,9 @@ module Pieces
       [-2, -1]
     ]
 
-    def initialize
+    def initialize(piece, color, square)
       @icon = "♞"
-      super
-      # Knight can move any combination of 2,1 squares
+      super(piece, color, square)
     end
   end
 end

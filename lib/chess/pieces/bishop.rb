@@ -43,9 +43,9 @@ module Pieces
       [-8, -8]
     ]
 
-    def initialize
+    def initialize(piece, color, square)
       @icon = "♝"
-      super
+      super(piece, color, square)
     end
   end
 end

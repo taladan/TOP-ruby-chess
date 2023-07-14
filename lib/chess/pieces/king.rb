@@ -19,10 +19,10 @@ module Pieces
       [-1, 0]
     ]
 
-    def initialize
+    def initialize(piece, color, square)
       @icon = "♚"
       # King can move any single square in a straight line from current square
-      super
+      super(piece, color, square)
     end
   end
 end

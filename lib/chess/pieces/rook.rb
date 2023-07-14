@@ -43,9 +43,9 @@ module Pieces
       [-8, 0]
     ]
 
-    def initialize
+    def initialize(piece, color, square)
       @icon = "♜"
-      super
+      super(piece, color, square)
       # Rook can move any number of squares in a straight line, left/right/up/down, no diagonals
     end
   end

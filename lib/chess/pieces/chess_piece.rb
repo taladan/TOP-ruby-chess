@@ -28,6 +28,7 @@ module Pieces
     attr_reader :name, :color, :possible_moves, :icon
 
     def initialize(name, color, current_square)
+      require "colorize"
       raise InvalidPieceNameError unless %w[K Q B N R P k q b n r p].include?(name)
 
       @color = color

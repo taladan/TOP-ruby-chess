@@ -17,12 +17,12 @@ module Pieces
       [-1, 1]
     ]
 
-    def initialize
+    def initialize(piece, color, square)
       @icon = "♟"
       # Pawn can move 2 squares forward in first move or 1 square forward first move, subsequent moves are 1 square forward.  May only attack on
       # a forward diagonal.  Can't move backwards at all.
       @has_moved = false
-      super
+      super(piece, color, square)
     end
   end
 end
