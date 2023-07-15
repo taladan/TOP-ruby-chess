@@ -3,8 +3,8 @@
 
 require "chess_piece"
 
-# Bishop chess piece
 module Pieces
+  # Bishop chess piece
   class Bishop < ChessPiece
     attr_reader :icon
 

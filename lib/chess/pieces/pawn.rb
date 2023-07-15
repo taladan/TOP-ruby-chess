@@ -3,16 +3,14 @@
 
 require "chess_piece"
 
-# Pawn chess piece
 module Pieces
+  # Pawn chess piece
   class Pawn < ChessPiece
     attr_reader :icon
+
     POSSIBLE_MOVES = [
       [0, 1],
       [0, 2],
-      [1, 1],
-      [-1, 1],
-      [0, 1],
       [1, 1],
       [-1, 1]
     ]

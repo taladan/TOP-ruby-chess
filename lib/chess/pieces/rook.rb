@@ -3,8 +3,8 @@
 
 require "chess_piece"
 
-# Rook chess piece
 module Pieces
+  # Rook chess piece
   class Rook < ChessPiece
     attr_reader :icon
 

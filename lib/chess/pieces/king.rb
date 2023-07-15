@@ -3,8 +3,8 @@
 
 require "chess_piece"
 
-# King chess piece
 module Pieces
+  # King chess piece
   class King < ChessPiece
     attr_reader :icon
 
