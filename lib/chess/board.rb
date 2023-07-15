@@ -3,10 +3,9 @@
 
 # Generate a graph called "Board" of nodes called "squares"
 class Board
-  # include Squares
-  include Display
-  include PieceHandler
   include SquareHandler
+  include PieceHandler
+  include Display
 
   attr_accessor :squares
   attr_reader :columns, :rows, :display
@@ -78,7 +77,7 @@ class Board
     @valid_squares = combine_columns_and_rows.to_a
     @valid_squares.each { |square| @squares << Square.new(square) }
     # gives the squares positions in space
-    assign_square_positions
+    assign_square_positions(generate_2d_array)
     # calculate neighbors and assign a color to square
     @squares.each do |square|
       assign_neighbors(square)

@@ -4,10 +4,11 @@
 # This module contains the logic needed to deal with identification and
 # manipulation of nodes (called squares) of a chess board.
 module SquareHandler
+  require 'square'
   # count total number of squares in board
   # takes nothing, returns integer
   def count
-    squares.length
+    @squares.length
   end
 
   # takes a string (ex: `a1`)
@@ -47,6 +48,15 @@ module SquareHandler
     square.position
   end
 
+  # this will give squares positional information as an easier way to reference as a 2d array as well as name info
+  # allows for some math operations like assign_neighbors
+  def assign_square_positions(arr2d)
+    @squares.each_with_index do |square, index|
+      square.assign_positions(arr2d[index])
+    end
+    nil
+  end
+
   private
 
   # This is a little raw.  If I were to refactor this, I'd set up a setter/getter function for neighbors in square.
@@ -70,16 +80,6 @@ module SquareHandler
         square.neighbors[k] = nil
       end
     end
-  end
-
-  # this will give squares positional information as an easier way to reference as a 2d array as well as name info
-  # allows for some math operations like assign_neighbors
-  def assign_square_positions
-    arr2d = generate_2d_array
-    @squares.each_with_index do |square, index|
-      square.assign_positions(arr2d[index])
-    end
-    nil
   end
 
   # recurse through all east neighbors, pack square and return when [:e].nil? == true

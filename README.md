@@ -54,16 +54,20 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 - [square_handler.rb](https://github.com/taladan/TOP-ruby-kt/blob/main/lib/square_handler.rb)
 
 
-#### List:
+#### Refactor List:
 - [ ] Decouple board from pieces and displays
 - [ ] Separate data from code:
 	- [x] Create lib/data directory
 	- [x] Create standard_initial_setup file that stores the starting piece positions for a standard game of chess
 - [ ] piece_handler.rb:  
 	- [x] need to alter the piece names to use [fen](https://www.chess.com/terms/fen-chess) standard
-	- [ ] \#add_piece method seems tightly coupled to square.rb - square_handler should probably be called here to swap square's contents
+	- [x] \#add_piece method seems tightly coupled to square.rb - square_handler should probably be called here to swap square's contents
 	- [x] Implement custom errors
-	- [ ] decouple \#put_piece from square.rb
+- [ ] square_handler.rb:
+	- [ ] find_square_by_name 
+	- [ ] find_square_by_position
+	- [ ] get_name_by_position
+	- [ ] get_position_by_name
 
 ---
 

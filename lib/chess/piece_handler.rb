@@ -3,6 +3,7 @@
 
 # Module file containing piece logic
 require "chess_piece"
+require "piece_maker"
 require "king"
 require "queen"
 require "bishop"
@@ -33,7 +34,9 @@ module PieceHandler
     color = "black" if /[[:lower:]]/.match(piece)
 
     square = find_square_by_name(position.downcase)
-    square.contents = ChessPiece.new(piece, color, square)
+    chesspiece = PieceMaker.make_piece(piece, color, square)
+    # Refactor to use actual piece creation instead of instantiating ChessPiece
+    square.contents = chesspiece
     nil
   end
 
@@ -75,6 +78,24 @@ module PieceHandler
   # Calculate squares piece can move to.  Accepts two, n-element arrays, returns one n-element array
   def add_current_and_possible_squares(current, possible)
     [current, possible].transpose.map { |x| x.reduce(:+) }
+  end
+  
+  def create_piece(piece, color, square)
+      case piece
+      when "K"
+        King.new(piece, color, square)
+      when "Q"
+        Queen.new(piece, color, square)
+      when "B"
+        Bishop.new(piece, color, square)
+      when "N"
+        Knight.new(piece, color, square)
+      when "R"
+        Rook.new(piece, color, square)
+      when "P"
+        Pawn.new(piece, color, square)
+      end
+
   end
 
   # Takes an array of squares and gets their 2d array positions
