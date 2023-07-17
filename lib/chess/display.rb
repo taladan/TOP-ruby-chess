@@ -45,6 +45,18 @@ module Display
     print_column_labels
   end
 
+  # Prints to screen and takes input from user for player names
+  # takes no arguments
+  # outputs a two element array
+  def self.query_for_players
+    output = []
+    print("Enter the name of player 1: ")
+    output << gets.chomp
+    print("\nEnter the name of player 2: ")
+    output << gets.chomp
+    output
+  end
+
   private
 
   # insert newline

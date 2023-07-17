@@ -14,18 +14,23 @@ require "piece_handler"
 require "square"
 require "square_handler"
 require "board"
+require "player_handler"
 require "version"
 require "yaml"
 
 # Overarching chess module
 module Chess
-  attr_reader :board
-
   # Game class object
   class Game
+    attr_reader :board, :player1, :player2
+
     def initialize
       @board = Board.new
+      @game_type = "standard"
+      @turn_number = 0
+      @turn_history = {}
       setup_board
+      setup_players
     end
 
     def show_board
@@ -42,7 +47,18 @@ module Chess
       standard_setup = YAML.safe_load(File.read("./lib/data/chess_standard_setup.yml"))
       standard_setup.each {|piece| @board.add_piece(piece[0], piece[1])}
     end
+
+    # asks for player names
+    def setup_players
+      players = Display.query_for_players
+      players.each_with_index do |player, index|
+        @player1 = PlayerHandler.create_player(player, "white") if index.zero?
+        @player2 = PlayerHandler.create_player(player, "black") unless index.zero?
+      end
+    end
+    # End of class
   end
+  # End of module
 end
 
-Chess::Game.new
+GAME = Chess::Game.new
