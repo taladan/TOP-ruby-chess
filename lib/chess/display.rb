@@ -11,7 +11,6 @@ module Display
   # This receives an array of square objects, and returns a string for display
   # every square is treated as having a top, middle, and bottom pixel.  Contents of
   # each square will be displayed only in the middle pixel of the square.
-
   def build_row_string(row)
     output = { top: "", middle: "", bottom: "" }
     row.each do |square|
@@ -50,11 +49,42 @@ module Display
   # outputs a two element array
   def self.query_for_players
     output = []
-    print("Enter the name of player 1: ")
+    print "Enter the name of player 1: "
     output << gets.chomp
-    print("\nEnter the name of player 2: ")
+    print "Enter the name of player 2: "
     output << gets.chomp
     output
+  end
+
+  # Let users pick between a standard game of chess or a custom game
+  def self.query_for_game_type
+    input = ""
+    output = "standard"
+    until %w[s c standard custom].include?(input.downcase)
+      print "Enter game type, (S)tandard or (C)ustom: "
+      input = gets.chomp
+    end
+    output = "custom" if %w[C c custom].include?(input)
+    output
+  end
+
+  # We want to allow players to load their own custom starting files,
+  # this method explains our file format limitations and directs the 
+  # user to (preferably) store the file in `./lib/data`, but will allow
+  # the user to load the file from the directory they started the game from
+  # or type in the load path of the file.  The file MUST be in `.yml` format.
+  def self.query_for_starting_file
+    file = ""
+    puts "Ruby Chess uses the .yml format to store starting positions for chess pieces.
+    To load a custom game setup, you can either copy your custom .yml file to `./lib/data/`,
+    load the file from the directory you started the chess game from, or type the full path
+    (including the file name) to your startup file."
+    puts " "
+    until File.exist?(file)
+      puts "Please enter a valid (YAML) file name to load your custom starting positions from:"
+      file = Readline.readline("Chess:> ", true).strip
+    end
+    file
   end
 
   private
