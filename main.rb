@@ -33,22 +33,37 @@ module Chess
       setup_players
     end
 
+    # Display current state of game board
     def show_board
       @board.update_display
     end
 
+    # Printable string containing author information
+    def author
+      "Author: #{AUTHOR}"
+    end
+
+    # Printable string containing website information
+    def website
+      "Game website: #{WEBSITE}"
+    end
+
+    # Printable string containing versioning information
     def version
       "Ruby Chess version: #{VERSION}"
     end
 
     private
 
+    # Load standard board starting positions
     def setup_board
       standard_setup = YAML.safe_load(File.read("./lib/data/chess_standard_setup.yml"))
       standard_setup.each {|piece| @board.add_piece(piece[0], piece[1])}
     end
 
     # asks for player names
+    # creates player objects with appropriate colors
+    # assigns player objects to instance variables
     def setup_players
       players = Display.query_for_players
       players.each_with_index do |player, index|
