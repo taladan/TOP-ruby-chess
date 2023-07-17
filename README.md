@@ -63,25 +63,20 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 	- [x] need to alter the piece names to use [fen](https://www.chess.com/terms/fen-chess) standard
 	- [x] \#add_piece method seems tightly coupled to square.rb - square_handler should probably be called here to swap square's contents
 	- [x] Implement custom errors
-- [ ] square_handler.rb:
-	- [ ] find_square_by_name 
-	- [ ] find_square_by_position
-	- [ ] get_name_by_position
-	- [ ] get_position_by_name
-
+ 
 ---
 
 ### Features
 
 #### Needed
 - [x] Implement class objects for pieces
-- [ ] Define piece movements (POSSIBLE_MOVES)
+- [x] Define piece movements (POSSIBLE_MOVES)
 	- [x] king
 	- [x] queen
 	- [x] bishop
 	- [x] knight
 	- [x] rook
-	- [ ] pawn
+	- [x] pawn
 - [ ] executable that runs chess
 - [ ] Driver module: `./main.rb`
 	- [ ] requires:
@@ -93,8 +88,10 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 				- [ ] requires chess_piece.rb, king.rb, queen.rb, rook.rb, bishop.rb, knight.rb, pawn.rb
 		- [x] display.rb
 		- [x] version.rb
-  - [ ] features:
-	  - [ ] query user for type of game, standard/custom builtin
+- [ ] Game Startup
+	- [ ] Print game name/version/author info 
+	- [ ] query user for type of game, standard/custom builtin 
+	- [ ] query user for computer vs. player or player vs. player
 - [x] An initial setup of the board state for a standard game of chess. 
 	- [ ] piece positions:
 		- [ ] a8 - black queen's rook
@@ -116,6 +113,9 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 		- [ ] g1 - white king's knight
 		- [ ] h1 - white king's rook
 - [ ] Turn handling (player 1 is always white, player 2 is always black) 
+	- [ ] Player Handling
+		- [ ] Player Object
+- [x] Load custom starting board setups (yml files only)
 - [ ] Input handling
 - [ ] Piece removal (on capture) - piece_handler.rb
 - [ ] Method of recording moves 
@@ -128,6 +128,7 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 
 - [x] Board display reversability for 2 player play so 'current player' is always at the bottom of the board facing their opponent 
 - [ ] Tab completion for moves 
+- [x] Tab completion for loading custom game setup
 - [ ] Game timer
 - [ ] Global options configuration - `--board-setup filename.yml` - checks for `./lib/data/filename.yml` or current directory for filename.yml and loads the board setup from there.
-- [ ] [ASCII Chess pieces](https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode)
+- [x] [ASCII Chess pieces](https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode)
