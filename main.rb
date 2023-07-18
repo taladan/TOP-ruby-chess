@@ -30,13 +30,46 @@ module Chess
       @load_directory = "./lib/data/"
       @turn_number = 0
       @turn_history = {}
+      @current_player = nil
       setup_board(@game_type)
       setup_players
+      preamble
+      game_loop
+    end
+
+    # Stuff to print before the game starts
+    def preamble
+      system("clear")||system("cls")
+      Display.linebreak(1)
+      Display.write(version)
+      Display.write(author)
+      Display.write(website)
+    end
+
+    # Main game loop
+    def game_loop
+      run = true
+      while run
+        # Display the board
+        show_padded_board
+        # Prompt player for piece to move
+        moving_piece = Display.prompt_for_move(@current_player, "piece")
+        # prompt player for square to move to 
+        target_square = Display.prompt_for_move(@current_player, "target")
+        run = false
+      end
     end
 
     # Display current state of game board
     def show_board
       @board.update_display
+    end
+
+    # Pads the display of the board for prettier output
+    def show_padded_board
+      Display.linebreak(1)
+      show_board
+      Display.linebreak(3)
     end
 
     #
@@ -67,7 +100,7 @@ module Chess
       @game_type = Display.query_for_game_type
     end
 
-    # Load board starting positions 
+    # Load board starting positions
     def setup_board(type)
       standard_setup if type == "standard"
       custom_setup if type == "custom"
@@ -91,12 +124,14 @@ module Chess
     # asks for player names
     # creates player objects with appropriate colors
     # assigns player objects to instance variables
+    # sets current player as Player 1
     def setup_players
       players = Display.query_for_players
       players.each_with_index do |player, index|
         @player1 = PlayerHandler.create_player(player, "white") if index.zero?
         @player2 = PlayerHandler.create_player(player, "black") unless index.zero?
       end
+      @current_player = @player1
     end
     # End of class
   end

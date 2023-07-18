@@ -1,6 +1,8 @@
 # display.rb
+# frozen_string_literal: false
 
 require "colorize"
+require "messages"
 
 # Handle building display for chessboard
 module Display
@@ -31,7 +33,6 @@ module Display
   #
   # If update_display is called with 'true', it displays the board from the
   # perspective of the black pieces being at the bottom of the board.
-
   def update_display(reverse: false)
     # Build by row
     if reverse
@@ -76,15 +77,44 @@ module Display
   def self.query_for_starting_file
     file = ""
     puts "Ruby Chess uses the .yml format to store starting positions for chess pieces.
-    To load a custom game setup, you can either copy your custom .yml file to `./lib/data/`,
-    load the file from the directory you started the chess game from, or type the full path
-    (including the file name) to your startup file."
+    To load a custom game setup file type the full path (including the file name) to 
+    your startup configuration file."
     puts " "
     until File.exist?(file)
       puts "Please enter a valid (YAML) file name to load your custom starting positions from:"
       file = Readline.readline("Chess:> ", true).strip
     end
     file
+  end
+
+  # allow for putting N linebreaks on screen
+  def self.linebreak(num = 1)
+    num.downto(0).each { |_| puts " " }
+  end
+
+  # write text to screen
+  def self.write(text)
+    puts text
+  end
+
+  # Need to work on this prompt - it will need to do some logic stuff to determine piece to move and which
+  # square to move it to, whether that is a valid square or not
+  # The movement will work like this:
+  # The player is prompted to pick which piece they want to move.
+  # To be able to pick a piece the following must be true:
+  #   - The color of the piece MUST match the player's color
+  #   - The square indicated must not be empty
+  #   Accepts symbol `:piece` or `:target`
+  def self.prompt_for_move(player, phase)
+    input = ""
+    # Set up messaging object
+    msg = Display::Messages.new(player)
+
+    # Get a square string that matches a1-h8
+    input = Readline.readline(msg.message(phase.to_sym), true) until input =~ /[a-h][1-8]/
+
+    # clean up trailing whitespace characters from input
+    input.strip
   end
 
   private
@@ -104,11 +134,7 @@ module Display
 
   # set color of string to background of square
   def set_color(string, color)
-    if color == "black"
-      string.on_black
-    else
-      string.on_white
-    end
+    color == "black" ? string.on_black : string.on_white
   end
 
   def print_column_labels
