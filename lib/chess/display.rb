@@ -50,9 +50,9 @@ module Display
   # outputs a two element array
   def self.query_for_players
     output = []
-    print "Enter the name of player 1: "
+    print Display.write(:player_one_prompt)
     output << gets.chomp
-    print "Enter the name of player 2: "
+    print Display.write(:player_two_prompt)
     output << gets.chomp
     output
   end
@@ -62,8 +62,7 @@ module Display
     input = ""
     output = "standard"
     until %w[s c standard custom].include?(input.downcase)
-      print "Enter game type, (S)tandard or (C)ustom: "
-      input = gets.chomp
+      input = Readline.readline(Display.write(:game_type_prompt), true)
     end
     output = "custom" if %w[C c custom].include?(input)
     output
@@ -93,28 +92,20 @@ module Display
   end
 
   # write text to screen
-  def self.write(text)
-    puts text
+  def self.write(key, player = nil)
+    # player = PlayerHandler.create_player("", "") if player.nil?
+    msg = Display::Messages.new(player)
+    msg.message(key)
   end
 
-  # Need to work on this prompt - it will need to do some logic stuff to determine piece to move and which
-  # square to move it to, whether that is a valid square or not
-  # The movement will work like this:
-  # The player is prompted to pick which piece they want to move.
-  # To be able to pick a piece the following must be true:
-  #   - The color of the piece MUST match the player's color
-  #   - The square indicated must not be empty
   #   Accepts symbol `:piece` or `:target`
   def self.prompt_for_move(player, phase)
     input = ""
-    # Set up messaging object
-    msg = Display::Messages.new(player)
-
     # Get a square string that matches a1-h8
-    input = Readline.readline(msg.message(phase.to_sym), true) until input =~ /[a-h][1-8]/
+    input = Readline.readline(Display.write(phase, player), true) until input =~ /[a-hA-H][1-8]/
 
     # clean up trailing whitespace characters from input
-    input.strip
+    input.strip.downcase
   end
 
   private
