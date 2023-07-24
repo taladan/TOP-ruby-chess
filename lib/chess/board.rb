@@ -21,12 +21,17 @@ class Board
   # test if [n,m] is within confines of board
   def on_board?(position)
     return nil if position.nil?
-
-    rows = (0..@rows - 1).to_a
-    cols = (0..@columns - 1).to_a
-    row = position[1]
-    col = position[0]
-    rows.include?(row) && cols.include?(col)
+    
+    if position.kind_of?(Array)
+      rows = (0..@rows - 1).to_a
+      cols = (0..@columns - 1).to_a
+      row = position[1]
+      col = position[0]
+      rows.include?(row) && cols.include?(col)
+    elsif position.kind_of?(String)
+      find_square_by_name(position).kind_of?(Square)
+    else
+      raise InvalidInputError
   end
 
   private
