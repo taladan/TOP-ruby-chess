@@ -35,7 +35,7 @@ module Display
   def update_display(rotate = false)
     # Build by row
     if rotate
-     column = @columns - 1
+      column = @columns - 1
 
       # 0 - @rows - 1, black on bottom
       (0..@rows - 1).each do |row|
@@ -45,7 +45,7 @@ module Display
       end
     else
       # @rows - 1..0, white on bottom
-     column = 0
+      column = 0
       (@rows - 1).downto(0) do |row|
         row_elements = build_row(row, column, [], rotate)
         row_string = build_row_string(row_elements, rotate)
