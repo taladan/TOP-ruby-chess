@@ -37,4 +37,11 @@ module ChessErrors
       super
     end
   end
+
+  # Invalid input given by user
+  class InvalidInputError < StandardError
+    def initialize(msg = "Invalid input given")
+      super
+    end
+  end
 end
