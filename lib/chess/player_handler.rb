@@ -14,22 +14,21 @@ module PlayerHandler
 
   # Handles dealing with player movement
   def self.player_move(player, board)
-    piece = PlayerHandler.choose_piece(player, board)
+    piece = PlayerHandler.choose_piece(player)
     target = PlayerHandler.choose_target(player)
-    board.move_piece(piece,target)
+    board.move_piece(piece, target)
+    [piece, target]
   end
 
   # Prompt player for piece to move, validate and return piece (if valid)
-  def self.choose_piece(player, board)
+  def self.choose_piece(player)
     Display.prompt_for_move(player, :piece)
   end
 
   # prompt for target square to place piece
   # then validate and return the square object
   def self.choose_target(player)
-    # Display.prompt_for_move(player, :target)
-    target = Display.prompt_for_move(player, :target)
-    target
+    Display.prompt_for_move(player, :target)
   end
 
   ####  THIS SECTION NEEDS WORK

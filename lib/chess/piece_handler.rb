@@ -122,27 +122,24 @@ module PieceHandler
   end
 
   # Validate 2d array position either empty, occupied by teammate, occupied by enemy
-  # Return nil if off board or occupied by team mate (invalid position to move to)
+  # Raise error if off board or occupied by team mate (invalid position to move to)
   # Return target square if on board and empty or on board and contains enemy piece
   def validate_position(square, color)
-
     # Move invalid if square not on board
     raise InvalidTargetPositionError unless on_board?(square)
 
     target_square = find_square_by_position(square) if square.is_a?(Array)
     target_square = square if square.is_a?(Square)
 
+    # occupied by teammate
+    raise InvalidTargetPositionError if target_square.occupied? && target_square.contents.color == color
+
     # Empty square
     return target_square unless target_square.occupied?
 
     # occupied by enemy
     return target_square if target_square.occupied? && target_square.contents.color != color
-
-    # occupied by teammate
-    return nil if target_square.occupied? && target_square.contents.color == color
   end
-
-  private
 
   # swap squares contents
   def swap_contents(from, to, piece)
