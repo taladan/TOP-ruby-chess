@@ -34,8 +34,12 @@ module Pieces
       @color = color
       @name = name.upcase
       @current_square = current_square
-      @possible_moves = piece_moves
+      @possible_moves = piece_moves(color)
       colorize_icon
+    end
+
+    def can_move?(player)
+      player.color == @color
     end
 
     private
@@ -47,20 +51,20 @@ module Pieces
     end
 
     # Apply correct possible moves
-    def piece_moves
+    def piece_moves(color)
       case @name
       when "K"
-        @possible_moves = King::POSSIBLE_MOVES
+        @possible_moves = King.possible_moves
       when "Q"
-        @possible_moves = Queen::POSSIBLE_MOVES
+        @possible_moves = Queen.possible_moves
       when "B"
-        @possible_moves = Bishop::POSSIBLE_MOVES
+        @possible_moves = Bishop.possible_moves
       when "N"
-        @possible_moves = Knight::POSSIBLE_MOVES
+        @possible_moves = Knight.possible_moves
       when "R"
-        @possible_moves = Rook::POSSIBLE_MOVES
+        @possible_moves = Rook.possible_moves
       when "P"
-        @possible_moves = Pawn::POSSIBLE_MOVES
+        @possible_moves = Pawn.possible_moves(color)
       end
     end
   end

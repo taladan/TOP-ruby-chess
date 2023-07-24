@@ -1,10 +1,16 @@
+---
+aliases: [The Odin Project - Chess]
+linter-yaml-title-alias: The Odin Project - Chess
+created: Sunday, June 18th 2023, 6:20:15 pm
+modified: Monday, July 24th 2023, 11:59:08 am
+---
 # [The Odin Project - Chess](https://www.theodinproject.com/lessons/ruby-ruby-final-project)
 
 Chess is the Ruby Final Project for the Odin Project.
 
 To begin with, I'm porting over most of my code from my [Knight's Travails](https://github.com/taladan/TOP-ruby-kt) solution.  I'll be pulling out any code that isn't relevant to the chess game.  
 
-## Things to keep in mind:
+## Things to Keep in Mind:
 
 - [ ] [Chess notation](https://www.dummies.com/article/home-auto-hobbies/games/board-games/chess/understanding-chess-notation-192295/)
 
@@ -35,7 +41,7 @@ When referencing a piece, the abbreviation for that piece is capitalized for whi
 ## Todo:
 Please note, this is a working list of things to do.  It will likely change and expand over time.
 
-### Changes to make:
+### Changes to Make:
 
 #### Notes:
 This is mostly going to be stuff that needs to be refactored.  I'm starting out with a good chunk of code that I wrote for [Knight's Travails](https://github.com/taladan/TOP-ruby-kt).  The files I'll be using are:
@@ -63,6 +69,12 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 	- [x] need to alter the piece names to use [fen](https://www.chess.com/terms/fen-chess) standard
 	- [x] \#add_piece method seems tightly coupled to square.rb - square_handler should probably be called here to swap square's contents
 	- [x] Implement custom errors
+- [ ] display.rb
+	- [ ] self.query_for_players
+		- [x] Tie in prompts through Messages
+	- [ ] self.query_for_game_type
+		- [x] Tie in prompts through Messages
+
  
 ---
 
@@ -89,10 +101,10 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 		- [x] display.rb
 		- [x] version.rb
 - [ ] Game Startup
-	- [ ] Print game name/version/author info 
-	- [ ] query user for type of game, standard/custom builtin 
+	- [ ] Print game name/version/author info
+	- [x] query user for type of game, standard/custom builtin
 	- [ ] query user for computer vs. player or player vs. player
-- [x] An initial setup of the board state for a standard game of chess. 
+- [x] An initial setup of the board state for a standard game of chess.
 	- [ ] piece positions:
 		- [ ] a8 - black queen's rook
 		- [ ] b8 - black queen's knight
@@ -112,23 +124,25 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 		- [ ] f1 - white king's bishop
 		- [ ] g1 - white king's knight
 		- [ ] h1 - white king's rook
-- [ ] Turn handling (player 1 is always white, player 2 is always black) 
+- [ ] Turn handling (player 1 is always white, player 2 is always black)
 	- [ ] Player Handling
 		- [ ] Player Object
 - [x] Load custom starting board setups (yml files only)
 - [ ] Input handling
 - [ ] Piece removal (on capture) - piece_handler.rb
-- [ ] Method of recording moves 
-- [ ] Method of saving data to file 
+- [ ] Method of recording moves
+- [ ] Method of saving data to file
 - [ ] Method of loading data from file
 - [ ] Data structure for saving
 - [ ] Move tracking
 
 #### Wanted
 
-- [x] Board display reversability for 2 player play so 'current player' is always at the bottom of the board facing their opponent 
-- [ ] Tab completion for moves 
+- [x] [[Display]] Board display reversability for 2 player play so 'current player' is always at the bottom of the board facing their opponent
+- [ ] Tab completion for moves
 - [x] Tab completion for loading custom game setup
 - [ ] Game timer
 - [ ] Global options configuration - `--board-setup filename.yml` - checks for `./lib/data/filename.yml` or current directory for filename.yml and loads the board setup from there.
 - [x] [ASCII Chess pieces](https://en.wikipedia.org/wiki/Chess_symbols_in_Unicode)
+- [ ] Help system
+- [ ] Color indicated squares to visually indicate squares referenced by the game. (ex: Blocked movements, briefly highlighting the square before moving the piece, etc.)

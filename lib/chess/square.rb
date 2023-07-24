@@ -12,7 +12,8 @@ class Square
                 :contents,
                 :color,
                 :dist,
-                :prev
+                :prev,
+                :threatened
 
   def initialize(name)
     @name = name
@@ -25,6 +26,7 @@ class Square
     # Required for Knight's Travails
     @dist = 0
     @prev = nil
+    @threatened = nil
   end
 
   # Assign square color based on position within board.  Upper left & Lower right squares == whitejj
@@ -35,6 +37,7 @@ class Square
       @color = "white"
     end
   end
+  
 
   # Return true/false if square at beginning of row
   def head_of_row?
@@ -50,13 +53,16 @@ class Square
   def pixels
     pad = "      ".on_black if @color == "black"
     pad = "      ".on_white if @color == "white"
+    pad = "      ".on_yellow if @threatened
     mid = "  #{@contents.icon}   ".on_black if @color == "black" && !@contents.nil?
     mid = "  #{@contents.icon}   ".on_white if @color == "white" && !@contents.nil?
+    mid = "  #{@contents.icon}   ".on_yellow if @threatened && !@contents.nil?
     # uncomment for square names in center of each square
     # mid = "  #{name}  ".on_black if @color == "black" && @contents.nil?
     # mid = "  #{name}  ".on_white if @color == "white" && @contents.nil?
     mid = pad.on_black if @color == "black" && @contents.nil?
     mid = pad.on_white if @color == "white" && @contents.nil?
+    mid = pad.on_yellow if @threatened && @contents.nil?
 
     { top: pad, middle: mid, bottom: pad }
   end

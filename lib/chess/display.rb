@@ -13,7 +13,7 @@ module Display
   # This receives an array of square objects, and returns a string for display
   # every square is treated as having a top, middle, and bottom pixel.  Contents of
   # each square will be displayed only in the middle pixel of the square.
-  def build_row_string(row)
+  def build_row_string(row, rotate)
     output = { top: "", middle: "", bottom: "" }
     row.each do |square|
       output[:top] << square.pixels[:top]
@@ -25,7 +25,6 @@ module Display
   end
 
   # Output chess board to terminal
-  #
   # Syntax: #update_display[(true)]
   #
   # If update_display is called without passing 'true', it displays the board
@@ -33,16 +32,27 @@ module Display
   #
   # If update_display is called with 'true', it displays the board from the
   # perspective of the black pieces being at the bottom of the board.
-  def update_display(reverse: false)
+  def update_display(rotate = false)
     # Build by row
-    if reverse
+    if rotate
+     column = @columns - 1
+
       # 0 - @rows - 1, black on bottom
-      (0..@rows - 1).each { |row| puts build_row_string(build_row(row)) }
+      (0..@rows - 1).each do |row|
+        row_elements = build_row(row, column, [], rotate)
+        row_string = build_row_string(row_elements, rotate)
+        puts row_string
+      end
     else
       # @rows - 1..0, white on bottom
-      (@rows - 1).downto(0) { |row| puts build_row_string(build_row(row)) }
+     column = 0
+      (@rows - 1).downto(0) do |row|
+        row_elements = build_row(row, column, [], rotate)
+        row_string = build_row_string(row_elements, rotate)
+        puts row_string
+      end
     end
-    print_column_labels
+    print_column_labels(rotate)
   end
 
   # Prints to screen and takes input from user for player names
@@ -128,11 +138,17 @@ module Display
     color == "black" ? string.on_black : string.on_white
   end
 
-  def print_column_labels
+  def print_column_labels(rotate)
     linebreak
     printf("     ")
-    column_labels.each do |label|
-      printf("%-6s", label)
+    if rotate
+      column_labels.reverse.each do |label|
+        printf("%-6s", label)
+      end
+    else
+      column_labels.each do |label|
+        printf("%-6s", label)
+      end
     end
     linebreak
   end

@@ -49,10 +49,14 @@ module PieceHandler
     current = piece&.current_square&.position
 
     # loop through possible moves and build array
-    piece&.possible_moves&.each do |move|
-      possible_moves << validate_position(add_current_and_possible_squares(current, move), piece.color)
+    piece.possible_moves.each do |move|
+      begin
+        possible_moves << validate_position(add_current_and_possible_squares(current, move), piece.color)
+      rescue InvalidTargetPositionError
+        next
+      end
     end
-    possible_moves&.compact
+    possible_moves.compact
   end
 
   # move a piece from a named square to a named square ('a1-h8')
@@ -79,23 +83,22 @@ module PieceHandler
   def add_current_and_possible_squares(current, possible)
     [current, possible].transpose.map { |x| x.reduce(:+) }
   end
-  
-  def create_piece(piece, color, square)
-      case piece
-      when "K"
-        King.new(piece, color, square)
-      when "Q"
-        Queen.new(piece, color, square)
-      when "B"
-        Bishop.new(piece, color, square)
-      when "N"
-        Knight.new(piece, color, square)
-      when "R"
-        Rook.new(piece, color, square)
-      when "P"
-        Pawn.new(piece, color, square)
-      end
 
+  def create_piece(piece, color, square)
+    case piece
+    when "K"
+      King.new(piece, color, square)
+    when "Q"
+      Queen.new(piece, color, square)
+    when "B"
+      Bishop.new(piece, color, square)
+    when "N"
+      Knight.new(piece, color, square)
+    when "R"
+      Rook.new(piece, color, square)
+    when "P"
+      Pawn.new(piece, color, square)
+    end
   end
 
   # Takes an array of squares and gets their 2d array positions
@@ -115,19 +118,20 @@ module PieceHandler
 
     raise EmptySquareError if from.contents.nil?
 
-    # swap squares contents
-    to.contents = from.contents
-    from.contents = nil
-    piece.current_square = to
+    swap_contents(from, to, piece) unless validate_position(to.position, piece.color).nil?
   end
 
   # Validate 2d array position either empty, occupied by teammate, occupied by enemy
   # Return nil if off board or occupied by team mate (invalid position to move to)
   # Return target square if on board and empty or on board and contains enemy piece
-  def validate_position(target_position, color)
-    return nil unless on_board?(target_position)
+  def validate_position(square, color)
 
-    target_square = find_square_by_position(target_position)
+    # Move invalid if square not on board
+    raise InvalidTargetPositionError unless on_board?(square)
+
+    target_square = find_square_by_position(square) if square.is_a?(Array)
+    target_square = square if square.is_a?(Square)
+
     # Empty square
     return target_square unless target_square.occupied?
 
@@ -136,5 +140,14 @@ module PieceHandler
 
     # occupied by teammate
     return nil if target_square.occupied? && target_square.contents.color == color
+  end
+
+  private
+
+  # swap squares contents
+  def swap_contents(from, to, piece)
+    to.contents = from.contents
+    from.contents = nil
+    piece.current_square = to
   end
 end

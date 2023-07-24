@@ -26,6 +26,7 @@ module SquareHandler
     @squares.each do |square|
       return square if square.position == position
     end
+    nil
   end
 
   # Takes an array of two values: `[col, row]`
@@ -57,6 +58,21 @@ module SquareHandler
     nil
   end
 
+  def threatened?(square)
+    output = false
+    square.neighbors.each do |neighbor|
+      next unless square.occupied?
+
+      next if neighbor[1].nil?
+
+      neighboring_square = find_square_by_name(neighbor[1])
+      next unless neighboring_square.occupied?
+
+      output = true if neighboring_square.contents.color != square.contents.color
+    end
+    output
+  end
+
   private
 
   # This is a little raw.  If I were to refactor this, I'd set up a setter/getter function for neighbors in square.
@@ -83,11 +99,21 @@ module SquareHandler
   end
 
   # recurse through all east neighbors, pack square and return when [:e].nil? == true
-  def build_row(row, column = 0, output = [])
+  def build_row(row, column = 0, output = [], rotate)
     square = find_square_by_position([column, row])
-    return output << square if square.neighbors[:e].nil?
+    square.threatened == threatened?(square)
 
-    output << square
-    build_row(row, column + 1, output)
+    if rotate
+      return output << square if square.neighbors[:w].nil?
+
+      output << square
+      build_row(row, column - 1, output, rotate)
+    else
+      return output << square if square.neighbors[:e].nil?
+
+      output << square
+      build_row(row, column + 1, output, rotate)
+    end
+    output
   end
 end

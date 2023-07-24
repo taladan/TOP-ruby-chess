@@ -51,24 +51,22 @@ module Chess
       run = true
       while run
         # Display the board
-        show_padded_board
-        # Prompt player for piece to move
-        moving_piece = Display.prompt_for_move(@current_player, "piece")
-        # prompt player for square to move to 
-        target_square = Display.prompt_for_move(@current_player, "target")
-        run = false
+        show_padded_board(true) if @current_player.color == "black"
+        show_padded_board if @current_player.color == "white"
+        PlayerHandler.player_move(@current_player, @board)
+        @current_player = swap_players
       end
     end
 
     # Display current state of game board
-    def show_board
-      @board.update_display
+    def show_board(option)
+      @board.update_display(option)
     end
 
     # Pads the display of the board for prettier output
-    def show_padded_board
+    def show_padded_board(option=false)
       Display.linebreak(1)
-      show_board
+      show_board(option)
       Display.linebreak(3)
     end
 
@@ -132,6 +130,12 @@ module Chess
         @player2 = PlayerHandler.create_player(player, "black") unless index.zero?
       end
       @current_player = @player1
+    end
+    
+    # Changes the current player
+    def swap_players
+      return @player2 if @current_player == @player1
+      return @player1 if @current_player == @player2
     end
     # End of class
   end

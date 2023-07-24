@@ -32,6 +32,7 @@ class Board
       find_square_by_name(position).kind_of?(Square)
     else
       raise InvalidInputError
+    end
   end
 
   private
