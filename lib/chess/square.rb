@@ -37,7 +37,6 @@ class Square
       @color = "white"
     end
   end
-  
 
   # Return true/false if square at beginning of row
   def head_of_row?
