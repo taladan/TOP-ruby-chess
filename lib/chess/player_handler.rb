@@ -7,6 +7,7 @@
 module PlayerHandler
   require "square_handler"
   require "player"
+  include ChessErrors
 
   def self.create_player(name, color)
     Chess::Player.new(name, color)
@@ -16,7 +17,10 @@ module PlayerHandler
   def self.player_move(player, board)
     piece = PlayerHandler.choose_piece(player)
     target = PlayerHandler.choose_target(player)
-    board.move_piece(piece, target)
+
+    raise OpponentsPieceChosenError unless self.validate_piece(piece, player, board)
+
+    board.move_piece(piece, target, player)
     [piece, target]
   end
 
