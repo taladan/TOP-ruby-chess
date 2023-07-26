@@ -19,14 +19,14 @@ module ChessErrors
 
   # An invalid starting position has been given
   class InvalidStartingPositionError < StandardError
-    def initialize(msg = "Invalid Starting Position")
+    def initialize(msg = "Invalid Starting Position.")
       super
     end
   end
 
   # An empty square has been found when a chess piece was expected
   class EmptySquareError < StandardError
-    def initialize(msg = "No piece in starting square")
+    def initialize(msg = "No piece in starting square.")
       super
     end
   end
@@ -40,7 +40,14 @@ module ChessErrors
 
   # Invalid input given by user
   class InvalidInputError < StandardError
-    def initialize(msg = "Invalid input given")
+    def initialize(msg = "Invalid input given.")
+      super
+    end
+  end
+  
+  # Player tried moving opponent's piece
+  class OpponentsPieceChosenError < StandardError
+    def initialize(msg = "You cannot move an opponent's piece.")
       super
     end
   end
