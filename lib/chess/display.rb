@@ -104,8 +104,12 @@ module Display
   # write text to screen
   def self.write(key, player = nil)
     # player = PlayerHandler.create_player("", "") if player.nil?
-    msg = Display::Messages.new(player)
-    msg.message(key)
+    if key.is_a?(String)
+      key
+    else
+      msg = Display::Messages.new(player)
+      msg.message(key)
+    end
   end
 
   #   Accepts symbol `:piece` or `:target`
