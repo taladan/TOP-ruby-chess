@@ -64,7 +64,7 @@ module Pieces
       when "R"
         @possible_moves = Rook.possible_moves
       when "P"
-        @possible_moves = Pawn.possible_moves(color)
+        # @possible_moves = Pawn.possible_moves
       end
     end
   end
