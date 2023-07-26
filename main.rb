@@ -20,6 +20,7 @@ module Chess
   require "readline"
   require "version"
   require "yaml"
+
   # Game class object
   class Game
     attr_reader :board, :player1, :player2
@@ -33,58 +34,54 @@ module Chess
       @current_player = nil
       setup_board(@game_type)
       setup_players
-      preamble
       game_loop
     end
 
     # Stuff to print before the game starts
     def preamble
-      system("clear")||system("cls")
+      system("clear") || system("cls")
       Display.linebreak(1)
-      Display.write(version)
-      Display.write(author)
-      Display.write(website)
+      puts Display.write(version)
+      puts Display.write(author)
+      puts Display.write(website)
     end
 
-    # Main game loop
+    # main game loop
     def game_loop
       run = true
       while run
-        # Display the board
-        show_padded_board(true) if @current_player.color == "black"
-        show_padded_board if @current_player.color == "white"
-        PlayerHandler.player_move(@current_player, @board)
-        @current_player = swap_players
+        preamble
+        turn
       end
     end
 
-    # Display current state of game board
+    # display current state of game board
     def show_board(option)
       @board.update_display(option)
     end
 
-    # Pads the display of the board for prettier output
+    # pads the display of the board for prettier output
     def show_padded_board(option=false)
       Display.linebreak(1)
       show_board(option)
-      Display.linebreak(3)
+      Display.linebreak(2)
     end
 
     #
     # metadata stuff
     #
 
-    # Printable string containing author information
+    # printable string containing author information
     def author
       "Author: #{AUTHOR}"
     end
 
-    # Printable string containing website information
+    # printable string containing website information
     def website
       "Game website: #{WEBSITE}"
     end
 
-    # Printable string containing versioning information
+    # printable string containing versioning information
     def version
       "Ruby Chess version: #{VERSION}"
     end
@@ -93,18 +90,58 @@ module Chess
     # methods that set game data/information
     #
 
-    # Set the type of game: standard or custom
+    # set the type of game: standard or custom
     def set_game_type
+      preamble
+      Display.linebreak
       @game_type = Display.query_for_game_type
     end
 
-    # Load board starting positions
+    # load board starting positions
     def setup_board(type)
       standard_setup if type == "standard"
       custom_setup if type == "custom"
     end
 
     private
+
+    # use current player to determine how to display the board
+    def pick_board
+      show_padded_board(true) if @current_player.color == "black"
+      show_padded_board if @current_player.color == "white"
+    end
+
+    # display board and prompt players for moves, then record those moves
+    def turn
+      pick_board
+      begin
+        player1_move = PlayerHandler.player_move(@current_player, @board)
+      rescue => ex
+        puts("#{ex.message}")
+        sleep(1)
+      else
+        # swap players
+        @current_player = swap_players
+      end
+
+      # # player 2's go
+      # pick_board
+      # begin
+      #   player2_move = PlayerHandler.player_move(@current_player, @board)
+      # rescue => ex
+      #   puts("#{ex.message}")
+      # end
+
+      # @current_player = swap_players
+      # # Both player's moves makes a turn, so we record the movement data
+      # record_moves(player1_move, player2_move)
+    end
+
+    # store one full turn, which includes both players moves - source and destination
+    def record_moves(player1_move, player2_move, attack = false)
+      @turn_history[@turn_number] = [player1_move, player2_move]
+      @turn_number += 1
+    end
 
     # Load piece positions for a standard game of chess from yaml file located in
     # `./lib/data/chess_standard_setup.yml`
@@ -131,7 +168,7 @@ module Chess
       end
       @current_player = @player1
     end
-    
+
     # Changes the current player
     def swap_players
       return @player2 if @current_player == @player1
