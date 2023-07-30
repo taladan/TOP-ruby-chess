@@ -120,7 +120,9 @@ module PieceHandler
     # raise OpponentsPieceChosenError unless piece.color == player.color
     raise EmptySquareError if from.contents.nil?
 
-    raise PathError unless path_clear?(from, to)
+    unless piece.is_a?(Knight)
+      raise PathError unless path_clear?(from, to) 
+    end
 
     swap_contents(from, to, piece) unless validate_position(to.position, piece.color).nil?
   end

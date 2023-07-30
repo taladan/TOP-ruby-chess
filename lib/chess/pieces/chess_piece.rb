@@ -25,7 +25,7 @@ module Pieces
   # throw an `InvalidPieceNameError`.
   class ChessPiece
     attr_accessor :current_square
-    attr_reader :name, :color, :possible_moves, :icon
+    attr_reader :name, :color, :possible_moves, :icon, :can_jump
 
     def initialize(name, color, current_square)
       require "colorize"
@@ -33,6 +33,7 @@ module Pieces
 
       @color = color
       @name = name.upcase
+      @can_jump = false
       @current_square = current_square
       @possible_moves = piece_moves(color)
       colorize_icon
