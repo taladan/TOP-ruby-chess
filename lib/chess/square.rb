@@ -23,10 +23,10 @@ class Square
     @color = nil
     @x = nil
     @y = nil
+    @threatened = nil
     # Required for Knight's Travails
     @dist = 0
     @prev = nil
-    @threatened = nil
   end
 
   # Assign square color based on position within board.  Upper left & Lower right squares == whitejj

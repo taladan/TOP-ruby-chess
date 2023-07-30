@@ -32,6 +32,10 @@ module Chess
       @turn_number = 0
       @turn_history = {}
       @current_player = nil
+      @errors = ChessErrors.constants.map do |e|
+        ChessErrors.const_get(e)
+      end.select { |e| e.is_a?(Class) && e < StandardError }
+
       setup_board(@game_type)
       setup_players
       game_loop
@@ -115,8 +119,8 @@ module Chess
     def turn
       pick_board
       begin
-        player1_move = PlayerHandler.player_move(@current_player, @board)
-      rescue => ex
+        player_move = PlayerHandler.player_move(@current_player, @board)
+      rescue *@errors => ex
         puts("#{ex.message}")
         sleep(1)
       else
@@ -124,16 +128,6 @@ module Chess
         @current_player = swap_players
       end
 
-      # # player 2's go
-      # pick_board
-      # begin
-      #   player2_move = PlayerHandler.player_move(@current_player, @board)
-      # rescue => ex
-      #   puts("#{ex.message}")
-      # end
-
-      # @current_player = swap_players
-      # # Both player's moves makes a turn, so we record the movement data
       # record_moves(player1_move, player2_move)
     end
 

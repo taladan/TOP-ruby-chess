@@ -60,7 +60,7 @@ module PieceHandler
   end
 
   # move a piece from a named square to a named square ('a1-h8')
-  def move_piece(from_square, to_square, override: false)
+  def move_piece(from_square, to_square, player, override: false)
     raise InvalidStartingPositionError unless @valid_squares.include?(from_square)
     raise InvalidTargetPositionError unless @valid_squares.include?(to_square)
 
@@ -73,7 +73,7 @@ module PieceHandler
       raise IllegalMoveError unless valid_moves.include?(target.position)
     end
 
-    put_piece(from_square, to_square)
+    put_piece(from_square, to_square, player)
     nil
   end
 
@@ -84,6 +84,7 @@ module PieceHandler
     [current, possible].transpose.map { |x| x.reduce(:+) }
   end
 
+  # create a new piece object named `piece` of `color` on `square`
   def create_piece(piece, color, square)
     case piece
     when "K"
@@ -108,7 +109,7 @@ module PieceHandler
     output
   end
 
-  def put_piece(from_square, to_square)
+  def put_piece(from_square, to_square, player)
     # load squares
     from = find_square_by_name(from_square)
     to = find_square_by_name(to_square)
@@ -116,13 +117,77 @@ module PieceHandler
     # load piece
     piece = from.contents
 
+    # raise OpponentsPieceChosenError unless piece.color == player.color
     raise EmptySquareError if from.contents.nil?
+
+    raise PathError unless path_clear?(from, to)
 
     swap_contents(from, to, piece) unless validate_position(to.position, piece.color).nil?
   end
 
+  # return true if no pieces in path, false if pieces in path
+  #
+  # for path finding, I am using compass directionals to track desired piece movement
+  # I.E. nw, n, ne, e, se, s, sw, w
+  # With the direction, we are able to traverse the neighboring squares
+  # in the direction of movement and test for the presence of a piece within the path of the moving piece.
+  def path_clear?(from, to)
+    direction = determine_direction(from, to)
+    path = get_path(from, to, direction)
+    output = true
+    path.each do |square|
+      output = false if square.occupied?
+    end
+    output
+  end
+
+  # return the symbol representative of the direction the piece is moving
+  #
+  # determining direction is simple enough by using array math to test for an increase or decrease
+  # in value of either the row indicator or the column indicator for a particular square
+  def determine_direction(from, to)
+    row = from.x <=> to.x
+    col = from.y <=> to.y
+
+    case [row, col]
+    # column from gt column to
+    when [0, 1]
+      :s
+    # row from gt row to
+    when [1, 0]
+      :w
+    # row from gt row to && col from gt col to
+    when [1, 1]
+      :sw
+    # row from lt row to
+    when [-1, 0]
+      :e
+    # row from lt row to && col from lt col to
+    when [-1, -1]
+      :ne
+    # row from gt row to && col from lt col to
+    when [1, -1]
+      :nw
+    # row from lt row to && col from gt col to
+    when [-1, 1]
+      :se
+    # col from lt col to
+    when [0, -1]
+      :n
+    end
+  end
+
+  # recursively get array of squares that form path between from square and to square
+  def get_path(from, to, direction, current_position = from.position, output = [])
+    square = find_square_by_position(current_position)
+    output << square unless current_position == from.position
+    return output if current_position == to.position
+
+    next_position = find_square_by_name(square.neighbors[direction]).position
+    get_path(from, to, direction, next_position, output)
+  end
+
   # Validate 2d array position either empty, occupied by teammate, occupied by enemy
-  # Raise error if off board or occupied by team mate (invalid position to move to)
   # Return target square if on board and empty or on board and contains enemy piece
   def validate_position(square, color)
     # Move invalid if square not on board
