@@ -18,6 +18,8 @@ module Display
         player_two_prompt: "#{prompt} enter the name of player 2 #{prompt_terminator}",
         player_one_prompt: "#{prompt} enter the name of player 1 #{prompt_terminator}",
         game_type_prompt: "#{prompt} enter game type, (S)tandard or (C)ustom #{prompt_terminator}",
+        command_info: "You can also type 'save' to save your game or 'exit' to quit.",
+        how_to_play: "You can learn how to play chess here: https://www.chess.com/learn-how-to-play-chess"
       }
     end
 
