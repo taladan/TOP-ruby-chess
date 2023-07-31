@@ -116,7 +116,7 @@ module Display
   def self.prompt_for_move(player, phase)
     input = ""
     # Get a square string that matches a1-h8
-    input = Readline.readline(Display.write(phase, player), true) until input =~ /[a-hA-H][1-8]/
+    input = Readline.readline(Display.write(phase, player), true)
 
     # clean up trailing whitespace characters from input
     input.strip.downcase
