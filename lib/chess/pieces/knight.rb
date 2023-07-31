@@ -6,11 +6,10 @@ require "chess_piece"
 module Pieces
   # Knight chess piece
   class Knight < ChessPiece
-    attr_reader :icon, :can_jump
+    attr_reader :icon
 
     def initialize(piece, color, square)
       @icon = "♞"
-      @can_jump = true
       super(piece, color, square)
     end
 
