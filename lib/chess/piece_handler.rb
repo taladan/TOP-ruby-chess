@@ -109,6 +109,9 @@ module PieceHandler
     output
   end
 
+  # This loads the data for knowing what is moving where
+  # It takes two string values (from_square, to_square) and a player object
+  # returns target/to square
   def put_piece(from_square, to_square, player)
     # load squares
     from = find_square_by_name(from_square)
@@ -120,9 +123,8 @@ module PieceHandler
     # raise OpponentsPieceChosenError unless piece.color == player.color
     raise EmptySquareError if from.contents.nil?
 
-    unless piece.is_a?(Knight)
-      raise PathError unless path_clear?(from, to) 
-    end
+    # Check for pieces in the way of movement unless the player is moving a knight
+    raise PathError unless piece.is_a?(Knight) || path_clear?(from, to)
 
     swap_contents(from, to, piece) unless validate_position(to.position, piece.color).nil?
   end
@@ -209,6 +211,7 @@ module PieceHandler
   end
 
   # swap squares contents
+  # returns value of target square the piece moved to
   def swap_contents(from, to, piece)
     to.contents = from.contents
     from.contents = nil
