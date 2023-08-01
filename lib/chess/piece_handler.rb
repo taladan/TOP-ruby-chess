@@ -124,7 +124,7 @@ module PieceHandler
     raise EmptySquareError if from.contents.nil?
 
     # Check for pieces in the way of movement unless the player is moving a knight
-    raise PathError unless piece.is_a?(Knight) || path_clear?(from, to)
+    raise PathError unless piece.is_a?(Knight) || path_clear?(from, to, player)
 
     swap_contents(from, to, piece) unless validate_position(to.position, piece.color).nil?
   end
@@ -135,12 +135,18 @@ module PieceHandler
   # I.E. nw, n, ne, e, se, s, sw, w
   # With the direction, we are able to traverse the neighboring squares
   # in the direction of movement and test for the presence of a piece within the path of the moving piece.
-  def path_clear?(from, to)
+  def path_clear?(from, to, player)
     direction = determine_direction(from, to)
     path = get_path(from, to, direction)
     output = true
     path.each do |square|
-      output = false if square.occupied?
+      if square == path.last
+        # allow player to take piece if square is occupied by opponent's piece
+        output = true if square.occupied? && square.contents.color != player.color
+      else
+        # All squares between `from` and `to` non-inclusive must be empty
+        output = false if square.occupied?
+      end
     end
     output
   end
