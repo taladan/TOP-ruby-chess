@@ -67,4 +67,11 @@ module ChessErrors
       super
     end
   end
+
+  # king can't move into check
+  class MoveIntoCheckError < ChessError
+    def initialize(msg = "You cannot move your king into check.")
+      super
+    end
+  end
 end
