@@ -24,7 +24,7 @@ module Pieces
   # If an invalid piece name is passed when instantiating a chess piece, it will
   # throw an `InvalidPieceNameError`.
   class ChessPiece
-    attr_accessor :current_square
+    attr_accessor :current_square, :has_moved
     attr_reader :name, :color, :possible_moves, :icon
 
     def initialize(name, color, current_square)
@@ -34,6 +34,7 @@ module Pieces
       @color = color
       @name = name.upcase
       @current_square = current_square
+      @has_moved = false
       @possible_moves = piece_moves(color)
       colorize_icon
     end

@@ -7,11 +7,9 @@ module Pieces
   # King chess piece
   class King < ChessPiece
     attr_reader :icon
-    attr_accessor :has_moved
 
     def initialize(piece, color, square)
       @icon = "♚"
-      @has_moved = nil
       @possible_moves = possibles
       super(piece, color, square)
     end
