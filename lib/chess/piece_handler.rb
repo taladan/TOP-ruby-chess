@@ -77,6 +77,28 @@ module PieceHandler
     nil
   end
 
+  # TODO: This may be unusable...leaving it for now.
+  # return an array of all possible opponent's pieces
+  def self.all_possible_opponents(color)
+    output = []
+    ObjectSpace.each_object(ChessPiece).each { |piece| output << piece unless piece.color == color }
+    output
+  end
+  
+  # this returns an array of pieces that threaten the queried square
+  def self.calculate_opponent_threats(square)
+    opponent_pieces = PieceHandler.all_possible_opponents(square.contents.color)
+    threat_array = []
+    opponent_pieces.each do |piece|
+      # TODO: For some reason calculate_possible_moves is erroring here.  Not sure why yet
+      require "pry-byebug"
+      binding.pry
+      piece_moves = calculate_possible_moves(piece.current_square.name)
+      threat_array << piece if piece_moves.include?(square)
+    end
+    threat_array
+  end
+
   private
 
   # Calculate squares piece can move to.  Accepts two, n-element arrays, returns one n-element array
@@ -123,8 +145,8 @@ module PieceHandler
     # raise OpponentsPieceChosenError unless piece.color == player.color
     raise EmptySquareError if from.contents.nil?
 
-    # Check for pieces in the way of movement unless the player is moving a knight
-    raise PathError unless piece.is_a?(Knight) || path_clear?(from, to, player)
+    # Check for pieces in the way of movement
+    raise PathError unless path_clear?(from, to, player)
 
     swap_contents(from, to, piece) unless validate_position(to.position, piece.color).nil?
   end
@@ -132,14 +154,143 @@ module PieceHandler
   # return true if no pieces in path, false if pieces in path
   #
   # for path finding, I am using compass directionals to track desired piece movement
-  # I.E. nw, n, ne, e, se, s, sw, w
-  # With the direction, we are able to traverse the neighboring squares
-  # in the direction of movement and test for the presence of a piece within the path of the moving piece.
+  # i.e. nw, n, ne, e, se, s, sw, w
+  # with the direction, we are able to traverse the neighboring squares
+  # in the direction of movement and test for the presence of a piece within the path of the moving piece
+  # pawns, knights, and kings have special rules for movements
   def path_clear?(from, to, player)
     direction = determine_direction(from, to)
-    path = get_path(from, to, direction)
+    piece = from.contents
+    path = get_path(from, to, direction) unless piece.is_a?(Knight)
+
+    # pawns can only move n (if white), s (if black) and only attack ne/nw (if white), se/sw (if black)
+    if piece.is_a?(Pieces::Pawn)
+      pawn_check(piece, direction, path)
+
+    # Ensure target square is opponent's piece when occupied
+    elsif piece.instance_of?(Pieces::Knight)
+      knight_check(piece, to)
+
+    # Possible use for castling
+    elsif piece.instance_of?(Pieces::King)
+      # check for length of path if path == 3, MUST be castle
+      castle_check unless piece.has_moved && %i[e w].include?(direction) && path == 3
+
+      # otherwise normal king check
+      king_check(piece, path, direction)
+
+    # Queen, Bishop, Rook
+    else
+      piece_check(player, path)
+    end
+  end
+
+  # rules for pawn movement
+  def pawn_check(piece, direction, path)
+    # white pawns can move: n, ne, nw
+    # black pawns can move: s, se, sw
+    raise IllegalMoveError unless piece.can_move_direction?(direction)
+
+    if %i[n s].include?(direction)
+      pawn_movement(piece, path)
+    # attack only one space
+    elsif %i[ne se nw sw].include?(direction)
+      pawn_attack(piece, path)
+    else
+      raise InvalidTargetPositionError
+    end
+  end
+
+  # pawn moves: can move 1 or 2 if pawn hasn't moved already, can't move if target square is occupied
+  def pawn_movement(piece, path)
+    # if the pawn hasn't moved, it can move 1 or 2 spaces otherwise only 1 space at a time
+    raise IllegalMoveError if path.drop(1).count > piece.move_limit(:move)
+
+    # can't attack in a straight line
+    return false if path.last.occupied?
+
+    piece.has_moved = true unless piece.has_moved
+
+    true
+  end
+
+  # pawn attacks: can only move one space, target square MUST have opponent's piece in it
+  def pawn_attack(piece, path)
+    raise IllegalMoveError if path.drop(1).count > piece.move_limit(:attack)
+
+    target = path.last
+
+    # can only be attacking, target must have opponent's piece in it
+    return false unless target.occupied? && target.contents.color != piece.color
+
+    true
+  end
+
+  # check if pawns are in a state that triggers en passant (https://www.chess.com/article/view/how-to-capture-en-passant)
+  # this checks to see if the conditions for an en passant offer should be made to the opponent of the moving player
+  def en_passant?(piece, path)
+    # must have been triggered by double move
+    path.count == 3 && path.last.position[0] == piece.en_passant_rank && path.last.en_passant_neighbors?
+  end
+
+  # en passant goes here
+  def en_passant
+    # offer opponent a chance for en passant 
+    # if yes, that becomes opponent's movement and play goes back to
+    # the player whose movement initiated the en passant
+  end
+
+  # rules for knight movement
+  def knight_check(piece, target)
+    return false if target.occupied? && target.contents.color == piece.color
+
+    true
+  end
+
+  # rules for king movement
+  def king_check(piece, path)
+    target = path.last
+    # king CANNOT move into a threatened square
+    raise MoveIntoCheckError if target.threatened?(piece)
+
+    return false if target.occupied? && target.contents.color == piece.color
+
+    true
+  end
+
+  # castling checks go here
+  def castle_check
+    true
+  end
+
+  # rules for all other movement
+  def piece_check(player, path)
     output = true
     path.each do |square|
+      # We don't test the square we're starting from
+      next if square == path.first
+
+      if square == path.last
+        # allow player to take piece if square is occupied by opponent's piece
+        output = true if square.occupied? && square.contents.color != player.color
+      else
+        # All squares between `from` and `to` non-inclusive must be empty
+        output = false if square.occupied?
+      end
+    end
+    output
+  end
+
+  # Old path clear function - to be removed
+  def old_path_clear?(from, to, player)
+    output = true
+    direction = determine_direction(from, to)
+    piece = from.contents
+    path = get_path(from, to, direction) unless piece.is_a?(Knight)
+    path.each do |square|
+      # We don't test the square we're starting from
+      next if square == path.first
+
       if square == path.last
         # allow player to take piece if square is occupied by opponent's piece
         output = true if square.occupied? && square.contents.color != player.color
@@ -190,7 +341,7 @@ module PieceHandler
   # recursively get array of squares that form path between from square and to square
   def get_path(from, to, direction, current_position = from.position, output = [])
     square = find_square_by_position(current_position)
-    output << square unless current_position == from.position
+    output << square
     return output if current_position == to.position
 
     next_position = find_square_by_name(square.neighbors[direction]).position
