@@ -60,16 +60,18 @@ module SquareHandler
 
   def threatened?(square)
     output = false
-    square.neighbors.each do |neighbor|
-      next unless square.occupied?
+    opponent_squares = all_opponent_squares(square.color)
 
-      next if neighbor[1].nil?
+    # square.neighbors.each do |neighbor|
+    #   next unless square.occupied?
 
-      neighboring_square = find_square_by_name(neighbor[1])
-      next unless neighboring_square.occupied?
+    #   next if neighbor[1].nil?
 
-      output = true if neighboring_square.contents.color != square.contents.color
-    end
+    #   neighboring_square = find_square_by_name(neighbor[1])
+    #   next unless neighboring_square.occupied?
+
+    #   output = true if neighboring_square.contents.color != square.contents.color
+    # end
     output
   end
 

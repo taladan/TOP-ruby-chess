@@ -100,6 +100,6 @@ class Square
 
   # sets threats for square
   def assess_threats
-    @threats = PieceHandler.calculate_opponent_threats(self)
+    @threats = calculate_opponent_threats(self)
   end
 end
