@@ -91,7 +91,7 @@ module PieceHandler
       # TODO: For some reason calculate_possible_moves is erroring here.  Not sure why yet
       require "pry-byebug"
       binding.pry
-      piece_moves = get_square_positions(calculate_possible_moves(piece.current_square.name))
+      piece_moves = calculate_possible_moves(piece.current_square.name)
       threat_array << piece if piece_moves.include?(square)
     end
     threat_array
