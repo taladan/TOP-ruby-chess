@@ -119,6 +119,8 @@ module Chess
     def turn
       pick_board
       begin
+        require "pry-byebug"
+        binding.pry
         player_move = PlayerHandler.player_move(@current_player, @board)
       rescue *@errors => ex
         puts("#{ex.message}")

@@ -6,8 +6,7 @@ require "chess_piece"
 module Pieces
   # Pawn chess piece
   class Pawn < ChessPiece
-    attr_reader :icon
-    attr_accessor :has_moved
+    # attr_reader :icon
 
     def initialize(piece, color, square)
       @icon = "♟"

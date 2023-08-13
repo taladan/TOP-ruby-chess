@@ -50,11 +50,9 @@ module PieceHandler
 
     # loop through possible moves and build array
     piece.possible_moves.each do |move|
-      begin
-        possible_moves << validate_position(add_current_and_possible_squares(current, move), piece.color)
-      rescue InvalidTargetPositionError
-        next
-      end
+      possible_moves << validate_position(add_current_and_possible_squares(current, move), piece.color)
+    rescue InvalidTargetPositionError
+      next
     end
     possible_moves.compact
   end
@@ -84,7 +82,7 @@ module PieceHandler
     ObjectSpace.each_object(ChessPiece).each { |piece| output << piece unless piece.color == color }
     output
   end
-  
+
   # this returns an array of pieces that threaten the queried square
   def self.calculate_opponent_threats(square)
     opponent_pieces = PieceHandler.all_possible_opponents(square.contents.color)
@@ -93,7 +91,7 @@ module PieceHandler
       # TODO: For some reason calculate_possible_moves is erroring here.  Not sure why yet
       require "pry-byebug"
       binding.pry
-      piece_moves = calculate_possible_moves(piece.current_square.name)
+      piece_moves = get_square_positions(calculate_possible_moves(piece.current_square.name))
       threat_array << piece if piece_moves.include?(square)
     end
     threat_array
@@ -235,7 +233,7 @@ module PieceHandler
 
   # en passant goes here
   def en_passant
-    # offer opponent a chance for en passant 
+    # offer opponent a chance for en passant
     # if yes, that becomes opponent's movement and play goes back to
     # the player whose movement initiated the en passant
   end
@@ -273,10 +271,10 @@ module PieceHandler
       if square == path.last
         # allow player to take piece if square is occupied by opponent's piece
         output = true if square.occupied? && square.contents.color != player.color
-      else
-        # All squares between `from` and `to` non-inclusive must be empty
-        output = false if square.occupied?
+      elsif square.occupied?
+        output = false
       end
+      # All squares between `from` and `to` non-inclusive must be empty
     end
     output
   end
@@ -294,10 +292,10 @@ module PieceHandler
       if square == path.last
         # allow player to take piece if square is occupied by opponent's piece
         output = true if square.occupied? && square.contents.color != player.color
-      else
-        # All squares between `from` and `to` non-inclusive must be empty
-        output = false if square.occupied?
+      elsif square.occupied?
+        output = false
       end
+      # All squares between `from` and `to` non-inclusive must be empty
     end
     output
   end

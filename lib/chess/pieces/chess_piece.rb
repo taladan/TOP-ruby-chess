@@ -3,7 +3,6 @@
 
 # rubocop:disable Metrics/MethodLength
 
-# Parent class for all chess pieces
 module Pieces
   # ChessPiece object
   # When creating a new chess piece, it must follow FEN chess notation:
@@ -23,6 +22,8 @@ module Pieces
   #
   # If an invalid piece name is passed when instantiating a chess piece, it will
   # throw an `InvalidPieceNameError`.
+
+  # Parent class for all chess pieces
   class ChessPiece
     attr_accessor :current_square, :has_moved
     attr_reader :name, :color, :possible_moves, :icon
@@ -35,7 +36,7 @@ module Pieces
       @name = name.upcase
       @current_square = current_square
       @has_moved = false
-      @possible_moves = piece_moves(color)
+      @possible_moves = piece_moves
       colorize_icon
     end
 
@@ -52,9 +53,11 @@ module Pieces
     end
 
     # Apply correct possible moves
-    def piece_moves(color)
+    def piece_moves
       case @name
       when "K"
+        # require 'pry-byebug'
+        # binding.pry
         @possible_moves = King.possible_moves
       when "Q"
         @possible_moves = Queen.possible_moves

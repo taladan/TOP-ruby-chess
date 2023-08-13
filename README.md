@@ -2,7 +2,7 @@
 aliases: [The Odin Project - Chess]
 linter-yaml-title-alias: The Odin Project - Chess
 created: Sunday, June 18th 2023, 6:20:15 pm
-modified: Monday, July 24th 2023, 11:59:08 am
+modified: Wednesday, August 2nd 2023, 2:55:22 pm
 ---
 # [The Odin Project - Chess](https://www.theodinproject.com/lessons/ruby-ruby-final-project)
 
@@ -82,13 +82,37 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 
 #### Needed
 - [x] Implement class objects for pieces
-- [x] Define piece movements (POSSIBLE_MOVES)
-	- [x] king
-	- [x] queen
-	- [x] bishop
-	- [x] knight
-	- [x] rook
-	- [x] pawn
+- [ ] Piece Movement
+	- [x] Define piece movements (POSSIBLE_MOVES)
+		- [x] king
+		- [x] queen
+		- [x] bishop
+		- [x] knight
+		- [x] rook
+		- [x] pawn
+	- [ ] Pathing
+		- [ ] path_clear?
+			- [ ] pawn movement
+				- [ ] Is the square we're going to occupied?
+				- [ ] If it is occupied, is the direction we're going 'forward'(n for white, s for black), or 'diagonal'(ne/nw for white, se/sw for black)
+					- [ ] If it is diagonal, is the piece our color?
+						- [ ] If it's our color, error
+						- [ ] if it's not our color, attack?
+					- [ ] if it is forward, error
+				- [ ] if it is not occupied, move the piece
+				- [ ] En Passant?
+			- [x] knight movement
+				- [x] Is the square we're going to occupied?
+				- [x] If it is occupied, is the piece our color?
+					- [x] If it's our color, error
+					- [x] if it's not our color, attack?
+				- [x] if it is not occupied, move the piece
+			- [x] queen movement
+			- [ ] king movement
+				- [ ] Threatened squares
+				- [ ] Castling
+			- [x] rook movement
+			- [x] bishop movement
 - [ ] executable that runs chess
 - [ ] Driver module: `./main.rb`
 	- [ ] requires:
@@ -101,32 +125,30 @@ This is mostly going to be stuff that needs to be refactored.  I'm starting out 
 		- [x] display.rb
 		- [x] version.rb
 - [ ] Game Startup
-	- [ ] Print game name/version/author info
+	- [x] Print game name/version/author info
 	- [x] query user for type of game, standard/custom builtin
 	- [ ] query user for computer vs. player or player vs. player
 - [x] An initial setup of the board state for a standard game of chess.
-	- [ ] piece positions:
-		- [ ] a8 - black queen's rook
-		- [ ] b8 - black queen's knight
-		- [ ] c8 - black queen's bishop
-		- [ ] d8 - black queen
-		- [ ] e8 - black king
-		- [ ] f8 - black king's bishop
-		- [ ] g8 - black king's knight
-		- [ ] h8 - black king's rook
-		- [ ] a7-h7 = black pawns
-		- [ ] a2-h2 = white pawns
-		- [ ] a1 - white queen's rook
-		- [ ] b1 - white queen's knight
-		- [ ] c1 - white queen's bishop
-		- [ ] d1 - white queen
-		- [ ] e1 - white king
-		- [ ] f1 - white king's bishop
-		- [ ] g1 - white king's knight
-		- [ ] h1 - white king's rook
-- [ ] Turn handling (player 1 is always white, player 2 is always black)
-	- [ ] Player Handling
-		- [ ] Player Object
+	- [x] piece positions:
+		- [x] a8 - black queen's rook
+		- [x] b8 - black queen's knight
+		- [x] c8 - black queen's bishop
+		- [x] d8 - black queen
+		- [x] e8 - black king
+		- [x] f8 - black king's bishop
+		- [x] g8 - black king's knight
+		- [x] h8 - black king's rook
+		- [x] a7-h7 = black pawns
+		- [x] a2-h2 = white pawns
+		- [x] a1 - white queen's rook
+		- [x] b1 - white queen's knight
+		- [x] c1 - white queen's bishop
+		- [x] d1 - white queen
+		- [x] e1 - white king
+		- [x] f1 - white king's bishop
+		- [x] g1 - white king's knight
+		- [x] h1 - white king's rook
+- [x] Turn handling (player 1 is always white, player 2 is always black)
 - [x] Load custom starting board setups (yml files only)
 - [ ] Input handling
 - [ ] Piece removal (on capture) - piece_handler.rb

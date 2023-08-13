@@ -73,6 +73,17 @@ module SquareHandler
     output
   end
 
+  # return array of all squares currently containing an opposing piece
+  def self.all_opponent_squares(color)
+    output = []
+    ObjectSpace.each_object(Square) do |square|
+      next unless square.occupied?
+
+      output << square unless square.contents.color == color
+    end
+    output
+  end
+
   private
 
   # This is a little raw.  If I were to refactor this, I'd set up a setter/getter function for neighbors in square.

@@ -5,6 +5,7 @@ require "colorize"
 
 # a graph node named 'square'
 class Square
+  include PieceHandler
   attr_reader :x, :y
   attr_accessor :name,
                 :neighbors,
@@ -66,5 +67,39 @@ class Square
     @position = arr
     @x = @position[0]
     @y = @position[1]
+  end
+
+  # E/W neighboring squares must be occupied with an opponents pawn
+  def en_passant_neighbors?
+    en_passant = false
+    neighbors.each do |neighbor|
+      name = neighbor[0]
+      square = neighbor[1]
+      next unless %i[e w].include?(name)
+
+      if square.occupied? && square.contents.instance_of?(Pawn) && square.contents.color != @color
+        en_passant = true
+      else
+        en_passant = false unless en_passant == true
+      end
+    end
+    en_passant
+  end
+
+  # - Square can only be targted by other positions if:
+  #   - Any other square's contents has square.position in its list of possible moves
+  #   - if the above is true, those contents (piece) color must be opposite of square's content's color
+  def threatened?
+    # - Must be occupied
+    return false unless occupied?
+
+    assess_threats
+
+    @threats.empty?
+  end
+
+  # sets threats for square
+  def assess_threats
+    @threats = PieceHandler.calculate_opponent_threats(self)
   end
 end

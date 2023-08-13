@@ -10,13 +10,12 @@ module Pieces
 
     def initialize(piece, color, square)
       @icon = "♚"
-      @possible_moves = possibles
       super(piece, color, square)
     end
 
     # King can move any single square in a straight line from current square unless castling
     # king piece possible moves
-    def possibles
+    def self.possible_moves
       moves = [
         [1, 1],
         [-1, -1],
@@ -29,7 +28,7 @@ module Pieces
       ]
       castle_moves = [[0, 2], [0, -2]]
 
-      moves += castle_moves unless @has_moved
+      return moves += castle_moves unless @has_moved
 
       moves
     end
