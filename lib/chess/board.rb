@@ -14,14 +14,14 @@ class Board
     @columns = columns
     @rows = rows
     @squares = []
-    @valid_squares = nil
+    @valid_square_names = nil
     generate_board
   end
 
   # test if [n,m] is within confines of board
   def on_board?(position)
     return nil if position.nil?
-    
+
     if position.kind_of?(Array)
       rows = (0..@rows - 1).to_a
       cols = (0..@columns - 1).to_a
@@ -36,18 +36,6 @@ class Board
   end
 
   private
-
-  # is the queried square a boundary square?
-  # This method is currently unreferenced but may be useful in the future
-  def boundary?(square)
-    # Square is out of bounds
-    if square.position[0].zero? || square.position[1].zero? || square.position[0] == 7 || square.position[1] == 7
-      return true
-    end
-
-    # Square is empty, proceed
-    false
-  end
 
   # Return true if the square is occupied
   def occupied?(square)
@@ -80,8 +68,8 @@ class Board
   # create board of squares return nil
   def generate_board
     # make squares
-    @valid_squares = combine_columns_and_rows.to_a
-    @valid_squares.each { |square| @squares << Square.new(square) }
+    @valid_square_names = combine_columns_and_rows.to_a
+    @valid_square_names.each { |square| @squares << Square.new(square) }
     # gives the squares positions in space
     assign_square_positions(generate_2d_array)
     # calculate neighbors and assign a color to square
