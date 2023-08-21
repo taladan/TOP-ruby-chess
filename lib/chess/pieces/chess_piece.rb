@@ -56,8 +56,6 @@ module Pieces
     def piece_moves
       case @name
       when "K"
-        # require 'pry-byebug'
-        # binding.pry
         @possible_moves = King.possible_moves
       when "Q"
         @possible_moves = Queen.possible_moves

@@ -16,6 +16,7 @@ module Chess
   require "square"
   require "square_handler"
   require "board"
+  require "path"
   require "player_handler"
   require "readline"
   require "version"
@@ -32,6 +33,7 @@ module Chess
       @turn_number = 0
       @turn_history = {}
       @current_player = nil
+      # build array of chess errors to rescue
       @errors = ChessErrors.constants.map do |e|
         ChessErrors.const_get(e)
       end.select { |e| e.is_a?(Class) && e < StandardError }
@@ -119,8 +121,6 @@ module Chess
     def turn
       pick_board
       begin
-        require "pry-byebug"
-        binding.pry
         player_move = PlayerHandler.player_move(@current_player, @board)
       rescue *@errors => ex
         puts("#{ex.message}")
@@ -143,13 +143,25 @@ module Chess
     # `./lib/data/chess_standard_setup.yml`
     def standard_setup
       yaml_file = YAML.safe_load(File.read("./lib/data/chess_standard_setup.yml"))
-      yaml_file.each { |piece| @board.add_piece(piece[0], piece[1]) }
+      yaml_file.each do |piece|
+        # Creates the piece and adds to the board
+        new_piece = @board.add_piece(piece[0], piece[1])
+
+        # Add piece object to @board.pieces array
+        @board.pieces << new_piece
+      end
     end
 
     # Load piece positions for a custom game of chess from `.yml` file provided by user
     def custom_setup
       yaml_file = YAML.safe_load(File.read(Display.query_for_starting_file))
-      yaml_file.each { |piece| @board.add_piece(piece[0], piece[1]) }
+      yaml_file.each do |piece| 
+        # Creates the piece and adds to the board
+        new_piece = @board.add_piece(piece[0], piece[1])
+
+        # Add piece object to @board.pieces array
+        @board.pieces << new_piece
+      end
     end
 
     # asks for player names

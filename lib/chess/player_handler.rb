@@ -15,6 +15,7 @@ module PlayerHandler
 
   # Handles dealing with player movement
   def self.player_move(player, board)
+    # FIXME: Need to add a check for invalid input - test by putting in 'cy' as square source.
     piece = PlayerHandler.choose_piece(player)
     target = PlayerHandler.choose_target(player)
 
@@ -42,7 +43,7 @@ module PlayerHandler
   # - CANNOT be nil
   # - MUST allow player to move (be of the same color as the player)
   def self.validate_piece(square_name, player, board)
-    square = board.find_square_by_name(square_name)
+    square = board.retrieve_square(square_name)
     piece = square.contents
     !piece.nil? && piece.can_move?(player)
   end

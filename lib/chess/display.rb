@@ -39,7 +39,7 @@ module Display
 
       # 0 - @rows - 1, black on bottom
       (0..@rows - 1).each do |row|
-        row_elements = build_row(row, column, [], rotate)
+        row_elements = build_row(rotate, row, column, [])
         row_string = build_row_string(row_elements, rotate)
         puts row_string
       end
@@ -47,7 +47,7 @@ module Display
       # @rows - 1..0, white on bottom
       column = 0
       (@rows - 1).downto(0) do |row|
-        row_elements = build_row(row, column, [], rotate)
+        row_elements = build_row(rotate, row, column, [])
         row_string = build_row_string(row_elements, rotate)
         puts row_string
       end
