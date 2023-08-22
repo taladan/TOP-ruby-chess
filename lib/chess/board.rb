@@ -38,6 +38,8 @@ module Chess
         rows.include?(row) && cols.include?(col)
       elsif position.kind_of?(String)
         retrieve_square(position).kind_of?(Square)
+      elsif position.is_a?(Square)
+        true
       else
         raise InvalidInputError
       end

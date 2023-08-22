@@ -44,6 +44,8 @@ module PieceHandler
 
   # Return an array of valid and open squares to move to
   def calculate_possible_moves(from_square)
+    # require "pry-byebug"
+    # binding.pry
     possible_moves = []
     # load piece
     piece = retrieve_square(from_square).contents
@@ -83,8 +85,6 @@ module PieceHandler
   # return an array of all possible opponent's pieces
   def self.all_possible_opponents(color)
     output = []
-    # TODO: Objectspace is used mainly for debugging and can cause weird issues.  We need to track a 
-    # List of pieces that exist within the framework of the game - might need to live on board.
     @pieces.each { |piece| output << piece unless piece.color == color }
     output
   end

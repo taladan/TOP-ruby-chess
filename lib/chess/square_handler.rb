@@ -7,6 +7,7 @@ module SquareHandler
   require "square"
   require "errors"
   include ChessErrors
+  include PieceHandler
   # count total number of squares in board
   # takes nothing, returns integer
   # This method is currently unreferenced anywhere
@@ -30,9 +31,9 @@ module SquareHandler
   end
 
   # return array of all squares currently containing an opposing piece
-  def self.all_opponent_squares(color)
+  def all_opponent_squares(color)
     output = []
-    @squares.each do |square|
+    @path_board.squares.each do |square|
       next unless square.occupied?
 
       output << square unless square.contents.color == color
@@ -43,11 +44,11 @@ module SquareHandler
   # - Square can only be targted by other positions if:
   #   - Any other square's contents has square.position in its list of possible moves
   #   - if the above is true, those contents (piece) color must be opposite of square's content's color
-  def self.threatened?(square)
-    # - Must be occupied
-    return false unless square.occupied?
+  # - Must be occupied
+  def threatened?(square, color)
+    # return false unless square.occupied?
 
-    assess_threats(square)
+    assess_threats(square, color)
 
     return true if square.threatened
 
@@ -55,8 +56,8 @@ module SquareHandler
   end
 
   # sets threats for square
-  def self.assess_threats(square)
-    square.threats = PieceHandler.calculate_opponent_threats(square)
+  def assess_threats(square, color)
+    square.threats = calculate_opponent_threats(square, color)
 
     square.threatened == true unless square.threats.nil?
   end
@@ -116,12 +117,15 @@ module SquareHandler
   end
 
   # this returns an array of pieces that threaten the queried square
-  def self.calculate_opponent_threats(square)
-    opponent_pieces = PieceHandler.all_possible_opponents(square.contents.color)
+  def calculate_opponent_threats(square, color)
+    opposing_squares = all_opponent_squares(color)
     threat_array = []
-    opponent_pieces.each do |piece|
-      # TODO: For some reason calculate_possible_moves is erroring here.  Not sure why yet
-      piece_moves = calculate_possible_moves(piece.current_square)
+    opposing_squares.each do |sq|
+      # require "pry-byebug"
+      # binding.pry
+      piece = sq.contents
+      # piece_moves = calculate_possible_moves(piece.current_square)
+      piece_moves = calculate_possible_moves(sq)
       threat_array << piece if piece_moves.include?(square)
     end
     threat_array
@@ -132,6 +136,8 @@ module SquareHandler
   # takes a string (ex: `a1`)
   # returns `Square` object
   def find_square_by_name(name)
+    @squares = @path_board.squares if @squares.nil?
+
     @squares.each do |square|
       return square if square.name == name
     end
@@ -141,6 +147,8 @@ module SquareHandler
   # takes an array (ex: [a1])
   # returns 'Square' object
   def find_square_by_position(position)
+    @squares = @path_board.squares if @squares.nil?
+
     @squares.each do |square|
       return square if square.position == position
     end

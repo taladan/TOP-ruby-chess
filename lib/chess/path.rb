@@ -34,7 +34,7 @@ module PieceHandler
         castle_rule unless piece.has_moved && %i[e w].include?(direction) && path == 3
 
         # otherwise normal king check
-        king_rule(piece, path, direction)
+        king_rule(piece, path)
 
       # Queen, Bishop, Rook
       else
@@ -44,7 +44,6 @@ module PieceHandler
 
     # rules for pawn movement
     def pawn_rules(piece, direction, path)
-      # TODO: All of this is old code and needs to be refactored
       # white pawns can move: n, ne, nw
       # black pawns can move: s, se, sw
       raise IllegalMoveError unless piece.can_move_direction?(direction)
@@ -61,7 +60,6 @@ module PieceHandler
 
     # pawn moves: can move 1 or 2 if pawn hasn't moved already, can't move if target square is occupied
     def pawn_move(piece, path)
-      # TODO: All of this is old code and needs to be refactored
       # if the pawn hasn't moved, it can move 1 or 2 spaces otherwise only 1 space at a time
       raise IllegalMoveError if path.drop(1).count > piece.move_limit(:move)
 
@@ -73,9 +71,15 @@ module PieceHandler
       true
     end
 
+    # This is here because king movement breaks everything
+    # TODO: refactor so that Path is somehow inside the scope of the
+    # board object
+    def on_board?(square)
+      @path_board.on_board?(square)
+    end
+
     # pawn attacks: can only move one space, target square MUST have opponent's piece in it
     def pawn_attack(piece, path)
-      # TODO: All of this is old code and needs to be refactored
       raise IllegalMoveError if path.drop(1).count > piece.move_limit(:attack)
 
       target = path.last
@@ -104,7 +108,6 @@ module PieceHandler
 
     # rules for knight movement
     def knight_rule(piece, target)
-      # TODO: All of this is old code and needs to be refactored
       return false if target.occupied? && target.contents.color == piece.color
 
       true
@@ -114,8 +117,11 @@ module PieceHandler
     def king_rule(piece, path)
       # TODO: All of this is old code and needs to be refactored
       target = path.last
+
       # king CANNOT move into a threatened square
-      raise MoveIntoCheckError if SquareHandler.threatened?(piece)
+      path.drop(1).each do |square|
+        raise MoveIntoCheckError if threatened?(square, piece.color)
+      end
 
       return false if target.occupied? && target.contents.color == piece.color
 
@@ -130,22 +136,21 @@ module PieceHandler
 
     # rules for all other movement
     def piece_rule(player, path)
-      # TODO: All of this is old code and needs to be refactored
-        output = true
-        path.each do |square|
-          # We don't test the square we're starting from
-          next if square == path.first
+      output = true
+      path.each do |square|
+        # We don't test the square we're starting from
+        next if square == path.first
 
-          if square == path.last
-            # allow player to take piece if square is occupied by opponent's piece
-            output = true if square.occupied? && square.contents.color != player.color
-          elsif square.occupied?
-            output = false
-          end
-          # All squares between `from` and `to` non-inclusive must be empty
+        if square == path.last
+          # allow player to take piece if square is occupied by opponent's piece
+          output = true if square.occupied? && square.contents.color != player.color
+        elsif square.occupied?
+          output = false
         end
-        output
+        # All squares between `from` and `to` non-inclusive must be empty
       end
+      output
+    end
 
     # return the symbol representative of the direction the piece is moving
     #
